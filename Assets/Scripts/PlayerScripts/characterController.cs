@@ -49,7 +49,6 @@ public class characterController : NetworkBehaviour
             canvas.transform.position = new Vector3(0, 0, 0);
             player = this.gameObject; //Assign player with the object the script is attached to
             canvas.GetComponent<ReloadingScript>().player = player;
-            canvas.GetComponent<PickUp>().player = player;
             canvas.GetComponent<UIforHealthSpeedAmmo>().thisPlayer = player;
             StartCoroutine(waitChangeName()); //calls the object name change method
 

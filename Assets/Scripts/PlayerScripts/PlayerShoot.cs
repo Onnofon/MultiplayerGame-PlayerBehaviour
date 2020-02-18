@@ -95,7 +95,6 @@ public class PlayerShoot : NetworkBehaviour
                 timeStamp = Time.time;
                 grenades -= 1;
                 grenadesCount -= 1;
-                playerScript.pickUpGrenade = false;
             }
         }
 

@@ -52,13 +52,14 @@ public class UIforHealthSpeedAmmo : MonoBehaviour {
             if (currentHealth > 0)
             {
                 BlackScreen.enabled = false;
-                respawn.text = "";
+                respawn.gameObject.SetActive(false);
                 respawnTimer = 3;
             }
         }        
     }
     IEnumerator Die() 
     {
+        respawn.gameObject.SetActive(true);
         BlackScreen.enabled = true; // Activate blackscreen
         respawn.text = "Respawning in: " + respawnTimer; // Initiate respawning text + Countdown
         yield return new WaitForSeconds(1);
@@ -69,5 +70,6 @@ public class UIforHealthSpeedAmmo : MonoBehaviour {
         respawn.text = "Respawning in: " + respawnTimer;
         yield return new WaitForSeconds(1);
         respawn.text = "";
+        respawn.gameObject.SetActive(false);
     }
 }

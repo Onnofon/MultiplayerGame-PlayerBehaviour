@@ -10,9 +10,6 @@ public class Player : NetworkBehaviour
     KillFeedUI killFeed;
     public GameObject player;
     PlayerShoot psScript;
-    public bool pickUpHealth = false;
-    public bool pickUpSpeed = false;
-    public bool pickUpGrenade = false;
     characterController cScript;
     public int thresholdlow;
     public int thresholdtop;
@@ -70,29 +67,6 @@ public class Player : NetworkBehaviour
             this.gameObject.GetComponent<characterController>().consecKills = 0;
             GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().kills++;
             GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().consecKills++;
-            if (GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().consecKills == 2)
-            {
-                killFeed.GetComponent<KillFeedUI>().twoKills.Play();
-            }
-
-            if (GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().consecKills == 3)
-            {
-                killFeed.GetComponent<KillFeedUI>().threeKills.Play();
-            }
-
-            if (GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().consecKills == 4)
-            {
-                killFeed.GetComponent<KillFeedUI>().fourKills.Play();
-            }
-            if (GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().consecKills ==5)
-            {
-                killFeed.GetComponent<KillFeedUI>().fiveKills.Play();
-            }
-            if (GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().consecKills > 5)
-            {
-                killFeed.GetComponent<KillFeedUI>().moreKills.Play();
-            }
-
             Die();
         }
     }
@@ -119,9 +93,6 @@ public class Player : NetworkBehaviour
 
     IEnumerator Respawn()
     {
-        pickUpHealth = false;
-        pickUpSpeed = false;
-        pickUpGrenade = false;
         yield return new WaitForSeconds(3f);
         SetDefaults();
         Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
@@ -156,30 +127,6 @@ public class Player : NetworkBehaviour
     {
         get { return this.currentHealth; }
     }
-
-    //Collision for pickups and activation powerups
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Pick Up Health"))
-        {
-            currentHealth += 10;
-            pickUpHealth = true;
-        }
-
-        if (other.gameObject.CompareTag("Pick Up Grenade"))
-        {
-            pickUpGrenade = true;
-            psScript.grenades += 1;
-            psScript.grenadesCount += 1;
-        }
-
-        if (other.gameObject.CompareTag("Pick Up Speed"))
-        {
-            GetComponent<characterController>().speed += 2.5f;
-            pickUpSpeed = true;
-        }
-    }
-
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "DamageZone")
