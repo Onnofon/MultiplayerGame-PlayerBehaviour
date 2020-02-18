@@ -15325,6 +15325,7 @@ MonoBehaviour:
   componentToEnable:
   - {fileID: 4468905918717139244}
   mesh: {fileID: 23856274341186388}
+  col: {fileID: 136995620015001416}
 --- !u!114 &114457634009049630
 MonoBehaviour:
   m_ObjectHideFlags: 0

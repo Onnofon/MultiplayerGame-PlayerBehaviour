@@ -97,6 +97,7 @@ public class characterController : NetworkBehaviour
     public Behaviour[] componentsToDisable;
     public Behaviour[] componentToEnable;
     public MeshRenderer mesh;
+    public CapsuleCollider col;
     private void EnterSpectator()
     {
         for (int i = 0; i < componentsToDisable.Length; i++)
@@ -109,6 +110,7 @@ public class characterController : NetworkBehaviour
         }
         gun.SetActive(false);
         mesh.enabled = false;
+        col.enabled = false;
     }
 
     [Command]
