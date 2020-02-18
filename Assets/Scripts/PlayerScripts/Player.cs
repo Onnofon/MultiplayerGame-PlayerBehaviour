@@ -122,7 +122,6 @@ public class Player : NetworkBehaviour
         psScript = player.GetComponent<PlayerShoot>();
         psScript.ammoAR = psScript.maxAmmoAR;
     }
-
     public int getHealth
     {
         get { return this.currentHealth; }

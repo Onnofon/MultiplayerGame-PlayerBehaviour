@@ -14,7 +14,7 @@ public class characterController : NetworkBehaviour
     public float jumpTakeOffSpeed = 6f;
     public float health;
     public GameObject gun;
-    public GameObject shield;
+    //public GameObject shield;
     public GameObject canvas;
     GameObject player;
     public bool changing = false;
@@ -30,7 +30,7 @@ public class characterController : NetworkBehaviour
     void Start()
     {
         gun.SetActive(true);    
-        shield.SetActive(false);
+        //shield.SetActive(false);
         //originalPointLightColour = pointLight.color;
 
         if (health <= 0)
@@ -86,6 +86,29 @@ public class characterController : NetworkBehaviour
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+
+        if(Input.GetKeyDown("0"))
+        {
+            EnterSpectator();
+        }
+    }
+
+    
+    public Behaviour[] componentsToDisable;
+    public Behaviour[] componentToEnable;
+    public MeshRenderer mesh;
+    private void EnterSpectator()
+    {
+        for (int i = 0; i < componentsToDisable.Length; i++)
+        {
+            componentsToDisable[i].enabled = false;
+        }
+        for (int i = 0; i < componentToEnable.Length; i++)
+        {
+            componentToEnable[i].enabled = true;
+        }
+        gun.SetActive(false);
+        mesh.enabled = false;
     }
 
     [Command]
@@ -122,7 +145,7 @@ public class characterController : NetworkBehaviour
         speed = 7.0f;
         jumpTakeOffSpeed = 6f;
         gun.SetActive(true);
-        shield.SetActive(false);
+        //shield.SetActive(false);
         gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
