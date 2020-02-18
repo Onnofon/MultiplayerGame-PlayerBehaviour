@@ -6,8 +6,6 @@ using UnityEngine.Networking;
 public class characterController : NetworkBehaviour
 {
     // Use this for initialization
-
-    public string form;
     public bool onGround;
     private Rigidbody rb;
     public float speed;
@@ -31,7 +29,6 @@ public class characterController : NetworkBehaviour
 
     void Start()
     {
-        form = "AR";
         gun.SetActive(true);    
         shield.SetActive(false);
         //originalPointLightColour = pointLight.color;

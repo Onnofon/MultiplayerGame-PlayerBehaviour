@@ -150,9 +150,6 @@ public class Player : NetworkBehaviour
         //Weapon information 
         psScript = player.GetComponent<PlayerShoot>();
         psScript.ammoAR = psScript.maxAmmoAR;
-        psScript.ammoTank = psScript.maxAmmoTank;
-        psScript.ammoUtility = psScript.maxAmmoUtility;
-
     }
 
     public int getHealth

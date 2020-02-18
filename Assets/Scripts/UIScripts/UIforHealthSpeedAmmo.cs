@@ -34,17 +34,9 @@ public class UIforHealthSpeedAmmo : MonoBehaviour {
             cScript = thisPlayer.GetComponent<characterController>();
 
             currentHealth = pScript.getHealth;
-            if (psScript.form == "AR")
+            if (psScript.bulletform)
             {
                 ammo.text = ("  Ammo: " + psScript.ammoAR + " / " + psScript.maxAmmoAR); // Display ammo when in attack form
-            }
-            if (psScript.form == "Tank")
-            {
-                ammo.text = ("Ammo: " + psScript.ammoTank + " / " + psScript.maxAmmoTank); // Display ammo when in heavy form
-            }
-            if (psScript.form == "Utility")
-            {
-                ammo.text = ("         Ammo: " + "∞"); // Display ammo when in melee form
             }
 
             healthBar.fillAmount = currentHealth / 100; // Healthbar
