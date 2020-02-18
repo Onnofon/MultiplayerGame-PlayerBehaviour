@@ -26674,9 +26674,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1862809723213594}
-  pickUpHealth: 0
-  pickUpSpeed: 0
-  pickUpGrenade: 0
   thresholdlow: -100
   thresholdtop: 100
   damage: {fileID: 82412928302887512}
@@ -26697,7 +26694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a89e90761baa0164b815ae01a78ec505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  form: 
   onGround: 0
   speed: 0
   normalSpeed: 7
@@ -26705,10 +26701,8 @@ MonoBehaviour:
   jumpTakeOffSpeed: 6
   health: 10
   gun: {fileID: 1721393711679850}
-  sword: {fileID: 1341344249573810}
   shield: {fileID: 1139196232178146}
-  canvas: {fileID: 1706935625598476, guid: 9e963830930a1c94191c13585eaae55b, type: 3}
-  tankModel: {fileID: 1846793988561232}
+  canvas: {fileID: 4190250073459028335, guid: 6aa385eca091d724cb6121f55e4fee39, type: 3}
   changing: 0
   ChangeFormDelay: 5
   timeStamp: 0
@@ -27033,13 +27027,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fd8b42e7fcd484184319cf05c92951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  form: AR
   ammoAR: 0
   maxAmmoAR: 22
-  ammoTank: 0
-  maxAmmoTank: 23
-  ammoUtility: 0
-  maxAmmoUtility: 1
   weapon:
     timeStamp2: 0
     formDelay: 5
@@ -27048,7 +27037,6 @@ MonoBehaviour:
     range: 100
   flareattack: {fileID: 198927886845369140}
   flareattack2: {fileID: 198667065693715400}
-  flareheavy: {fileID: 198450923462336750}
   fireRate: 6
   nextTimeToFire: 0
   impactEffect: {fileID: 100006, guid: 32c48c2fa912bdf4481c919bc136010c, type: 3}
@@ -27059,7 +27047,7 @@ MonoBehaviour:
   throwposition: {fileID: 4897386941157962}
   grenadeDelay: 8
   timeStamp: 0
-  timeStamp2: 0
+  formTimeStamp: 0
   formDelay: 5
   FireLight: {fileID: 1033567257556664}
   bulletform: 0
@@ -27071,8 +27059,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294966783
   animM9: {fileID: 95429775504023838}
-  animHeavy: {fileID: 95657454441834356}
-  animMelee: {fileID: 95584485752007068}
   hitsound: {fileID: 82183914446261094}
 --- !u!82 &82562139054192486
 AudioSource:

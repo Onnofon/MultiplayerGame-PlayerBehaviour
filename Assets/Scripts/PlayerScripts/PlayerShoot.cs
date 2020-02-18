@@ -26,6 +26,7 @@ public class PlayerShoot : NetworkBehaviour
     public Transform throwposition;
     public float grenadeDelay = 8f;
     public float timeStamp;
+    public float formTimeStamp;
     public float formDelay = 5f;
     public GameObject FireLight;
     public bool bulletform;
