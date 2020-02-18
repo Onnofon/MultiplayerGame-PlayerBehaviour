@@ -16,10 +16,8 @@ public class characterController : NetworkBehaviour
     public float jumpTakeOffSpeed = 6f;
     public float health;
     public GameObject gun;
-    public GameObject sword;
     public GameObject shield;
     public GameObject canvas;
-    public GameObject tankModel;
     GameObject player;
     public bool changing = false;
     public float ChangeFormDelay = 5f;
@@ -35,9 +33,7 @@ public class characterController : NetworkBehaviour
     {
         form = "AR";
         gun.SetActive(true);    
-        sword.SetActive(false);
         shield.SetActive(false);
-        tankModel.SetActive(true);
         //originalPointLightColour = pointLight.color;
 
         if (health <= 0)
@@ -89,25 +85,6 @@ public class characterController : NetworkBehaviour
                 onGround = false;
             }
         }
-        //if (Input.GetKeyDown("1") && Time.time >= timeStamp)
-        //{
-        //    bulletform.Play();
-        //    FormAttack();
-        //    timeStamp = Time.time + ChangeFormDelay;
-        //}
-
-        //if (Input.GetKeyDown("2") && Time.time >= timeStamp)
-        //{
-        //    bulletform.Play();
-        //    FormHeavy();
-        //    timeStamp = Time.time + ChangeFormDelay;
-        //}
-        //if (Input.GetKeyDown("3") && Time.time >= timeStamp)
-        // {
-        //    lightsaberon.Play();
-        //     FormUtility();
-        //     timeStamp = Time.time + ChangeFormDelay;
-        // }
 
         if (Input.GetKeyDown("escape"))
             {
@@ -116,18 +93,18 @@ public class characterController : NetworkBehaviour
     }
 
     [Command]
-    void CmdChangeName(string nieuweNaam) //tells server to call the RpcChangeName for all clients
+    void CmdChangeName(string newName) //tells server to call the RpcChangeName for all clients
     {
-        RpcChangeName(nieuweNaam);
+        RpcChangeName(newName);
     }
 
     [ClientRpc] 
-    void RpcChangeName(string nieuweNaam)
+    void RpcChangeName(string newName)
     {
         Player keepPlayer = GameManager.players[this.name]; //remembers the current player
         GameManager.players.Remove(this.name); //removes the key + value
-        GameManager.players.Add(nieuweNaam, keepPlayer); //adds the remembered player with a new key
-        this.name = nieuweNaam; //updates the object name with the new name
+        GameManager.players.Add(newName, keepPlayer); //adds the remembered player with a new key
+        this.name = newName; //updates the object name with the new name
     }
 
     [Client]
@@ -146,64 +123,11 @@ public class characterController : NetworkBehaviour
     [ClientRpc]
     void RpcformAttack()
     {
-        form = "AR";
-        //speed = 7.0f;
+        speed = 7.0f;
         jumpTakeOffSpeed = 6f;
-        sword.SetActive(false);
         gun.SetActive(true);
         shield.SetActive(false);
-        tankModel.SetActive(true);
         gameObject.GetComponent<Renderer>().material.color = Color.red;
-    }
-
-    [Client]
-    void FormHeavy()
-    {
-        CmdformHeavy();
-    }
-
-    [Command]
-    void CmdformHeavy()
-    {
-        RpcformHeavy();
-    }
-
-    [ClientRpc]
-    void RpcformHeavy()
-    {
-        form = "Tank";
-        //speed = 4.0f;
-        jumpTakeOffSpeed = 3f;
-        shield.SetActive(true);
-        sword.SetActive(false);
-        gun.SetActive(false);
-        tankModel.SetActive(true);
-        gameObject.GetComponent<Renderer>().material.color = Color.blue;
-    }
-
-   [Client]
-    void FormUtility()
-    {
-        CmdformUtility();
-    }
-
-    [Command]
-    void CmdformUtility()
-    {
-        RpcformUtility();
-    }
-
-    [ClientRpc]
-    void RpcformUtility()
-    {
-        form = "Utility";
-        //speed = 10.0f;
-        jumpTakeOffSpeed = 8f;
-        gun.SetActive(false);
-        sword.SetActive(true);
-        shield.SetActive(false);
-        tankModel.SetActive(false);
-        gameObject.GetComponent<Renderer>().material.color = Color.yellow;
     }
 
     private void OnCollisionEnter(Collision other)

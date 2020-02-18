@@ -13,7 +13,7 @@ public class SettingLevel : MonoBehaviour {
     public void SetLevel()
     {
         if (drop.value == 0)
-            lobby.playScene = "Level 01 Maze";
+            lobby.playScene = "Test Plane";
         if (drop.value == 1)
             lobby.playScene = "Level 02 Circle";
         if (drop.value == 2)
