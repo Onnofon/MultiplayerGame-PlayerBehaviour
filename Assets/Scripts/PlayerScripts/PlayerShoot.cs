@@ -30,8 +30,7 @@ public class PlayerShoot : NetworkBehaviour
     public float formDelay = 5f;
     public GameObject FireLight;
     public bool bulletform;
-    Player playerScript;
-    characterController cScript;
+    public characterController cScript;
     public int grenades = 1;
     public int grenadesCount = 1;
     public int destroyGrenade = 0;
@@ -64,11 +63,22 @@ public class PlayerShoot : NetworkBehaviour
             ammoAR--;
             shoot.Play();
         }
-
-
         else
         {
             PlayerLightFalse();
+        }
+
+        if(Input.GetMouseButton(1))
+        {
+            cScript.shield.SetActive(true);
+            cScript.gun.SetActive(false);
+            bulletform = false;
+        }
+        else
+        {
+            cScript.shield.SetActive(false);
+            cScript.gun.SetActive(true);
+            bulletform = true;
         }
 
         if (GetComponent<Player>().getHealth < health)

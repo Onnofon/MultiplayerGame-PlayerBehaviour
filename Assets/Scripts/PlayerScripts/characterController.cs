@@ -14,7 +14,7 @@ public class characterController : NetworkBehaviour
     public float jumpTakeOffSpeed = 6f;
     public float health;
     public GameObject gun;
-    //public GameObject shield;
+    public GameObject shield;
     public GameObject canvas;
     GameObject player;
     public bool changing = false;

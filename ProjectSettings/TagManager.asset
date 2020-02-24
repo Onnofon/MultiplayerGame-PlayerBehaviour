@@ -9,6 +9,7 @@ TagManager:
   - Pick Up Speed
   - Pick Up Grenade
   - Pick Up Health
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
