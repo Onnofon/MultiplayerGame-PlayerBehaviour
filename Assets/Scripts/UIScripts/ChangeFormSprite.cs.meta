@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b10626d78bdcaf243a26aa0fac24a12b
+timeCreated: 1511360732
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - Tank: {fileID: 21300000, guid: d684736c7a9722349bddefa063163053, type: 3}
+  - Sanic: {fileID: 21300000, guid: 646c0dd6099e08842a989759863204c0, type: 3}
+  - gunna: {fileID: 21300000, guid: 258cad5cde5e16a488aefd8199b92987, type: 3}
+  - invis: {fileID: 21300000, guid: 381e33596ddd1234c9d374e8cc6a705c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

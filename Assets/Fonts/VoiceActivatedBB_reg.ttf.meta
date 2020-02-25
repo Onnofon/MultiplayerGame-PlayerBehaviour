@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0cbc93959f5bd0046b670abfdc7f0ec6
+timeCreated: 1515175029
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Voice Activated BB
+  fontNames:
+  - Voice Activated BB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
