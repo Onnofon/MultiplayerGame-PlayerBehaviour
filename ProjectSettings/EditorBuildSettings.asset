@@ -14,12 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Test Plane.unity
     guid: 5cb2de85fad76e245aebd79a64082d60
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Level 01 Maze.unity
     guid: a01ca49f449b823439a7356c7e3884f9
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Level 02 Circle.unity
     guid: 09831c7b5cd9a0443ab892e0bb761e58
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Level 03 Arena.unity
     guid: 5c7816c78a2d7ac40af69e3e71fd57c9
+  m_configObjects: {}

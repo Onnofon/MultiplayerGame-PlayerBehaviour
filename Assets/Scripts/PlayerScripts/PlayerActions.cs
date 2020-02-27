@@ -19,11 +19,19 @@ public class PlayerActions : MonoBehaviour
         {
             player.canvas.optionsMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
         else
         {
             player.canvas.optionsMenu.SetActive(false);
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        if (Input.GetKey("escape"))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }

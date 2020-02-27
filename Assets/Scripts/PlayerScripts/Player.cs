@@ -41,6 +41,7 @@ public class Player : NetworkBehaviour
         }
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     [SerializeField]
@@ -122,22 +123,30 @@ public class Player : NetworkBehaviour
 
     }
 
+    [Client]
     public void SetEmotion(string newEmotion)
+    {
+        CmdSetEmotion(newEmotion);
+    }
+
+    [Command]
+    void CmdSetEmotion(string newEmotion)
+    {
+        RpcSetEmotion(newEmotion);
+    }
+
+    [ClientRpc]
+    void RpcSetEmotion(string newEmotion)
     {
         foreach (Transform emotion in emotions)
         {
 
             if (emotion.name == newEmotion)
             {
-                Debug.Log("Building found");
                 currentEmotion.gameObject.SetActive(false);
                 emotion.gameObject.SetActive(true);
                 currentEmotion = emotion.gameObject;
 
-            }
-            else
-            {
-                Debug.Log("Did not find Building: ");
             }
         }
     }
