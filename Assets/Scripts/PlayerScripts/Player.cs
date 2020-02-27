@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class Player : NetworkBehaviour
 {
     public Player player;
-    public GameObject canvas;
+    public PlayerCanvas canvas;
     public int thresholdlow;
     public int thresholdtop;
+    public Transform emotions;
+    public GameObject currentEmotion;
 
     //Checking players current health
     [SyncVar]
@@ -118,5 +120,25 @@ public class Player : NetworkBehaviour
     public void Die()
     {
 
+    }
+
+    public void SetEmotion(string newEmotion)
+    {
+        foreach (Transform emotion in emotions)
+        {
+
+            if (emotion.name == newEmotion)
+            {
+                Debug.Log("Building found");
+                currentEmotion.gameObject.SetActive(false);
+                emotion.gameObject.SetActive(true);
+                currentEmotion = emotion.gameObject;
+
+            }
+            else
+            {
+                Debug.Log("Did not find Building: ");
+            }
+        }
     }
 }
