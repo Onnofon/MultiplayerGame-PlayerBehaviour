@@ -572,6 +572,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0500729463fc59f4e809e9a8318d6241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 7421229250505722632}
+  canvas: {fileID: 7918568950248615927, guid: 6cce2bc8e0001114c8d74a5c47588ce1, type: 3}
   thresholdlow: 0
   thresholdtop: 0
   maxHealth: 100
@@ -613,7 +615,6 @@ MonoBehaviour:
   normalSpeed: 7
   speedSprint: 12
   jumpTakeOffSpeed: 6
-  player: {fileID: 1662079138732520309}
 --- !u!136 &6621263401516742064
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -11,23 +11,11 @@ public class PlayerMovement : NetworkBehaviour
     public float normalSpeed = 7.0f;
     public float speedSprint = 12.0f;
     public float jumpTakeOffSpeed = 6f;
-    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (isLocalPlayer)
-        {
-            //canvas = Instantiate(canvas); //Adds canvas prefab
-            //canvas.transform.position = new Vector3(0, 0, 0);
-            player = this.gameObject; //Assign player with the object the script is attached to
-            //canvas.GetComponent<ReloadingScript>().player = player;
-            //canvas.GetComponent<UIforHealthSpeedAmmo>().thisPlayer = player;
-            //StartCoroutine(waitChangeName()); //calls the object name change method
-
-        }
         onGround = true;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

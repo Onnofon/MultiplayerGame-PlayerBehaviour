@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
+    public Player player;
+    public GameObject canvas;
     public int thresholdlow;
     public int thresholdtop;
 
@@ -27,7 +29,16 @@ public class Player : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (isLocalPlayer)
+        {
+            canvas = Instantiate(canvas); //Adds canvas prefab
+            canvas.transform.position = new Vector3(0, 0, 0);
+            //canvas.GetComponent<UIforHealthSpeedAmmo>().thisPlayer = player;
+            canvas.GetComponent<PlayerCanvas>().player = this.player;
 
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     [SerializeField]
