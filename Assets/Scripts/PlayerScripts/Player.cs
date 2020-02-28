@@ -12,6 +12,7 @@ public class Player : NetworkBehaviour
     public int thresholdtop;
     public Transform emotions;
     public GameObject currentEmotion;
+    public Transform holdPosition;
 
     //Checking players current health
     [SyncVar]
@@ -148,6 +149,26 @@ public class Player : NetworkBehaviour
                 currentEmotion = emotion.gameObject;
 
             }
+        }
+    }
+
+    public bool pickupInRange;
+    public PickUp pickup;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "PickUp")
+        {
+            pickupInRange = true;
+            pickup = other.GetComponent<PickUp>();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "PickUp")
+        {
+            pickupInRange = false;
+            pickup = null;
         }
     }
 }

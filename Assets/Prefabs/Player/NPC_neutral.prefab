@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &35034779025025049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6049066609332797259}
+  m_Layer: 0
+  m_Name: HoldPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6049066609332797259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35034779025025049}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.549, z: 1.2809998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7399352846010982512}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1661853484686676205
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,9 +456,10 @@ GameObject:
   - component: {fileID: 6557570725391090231}
   - component: {fileID: 6621263401516742064}
   - component: {fileID: -3308635428589690969}
-  m_Layer: 0
+  - component: {fileID: 2565981168422850607}
+  m_Layer: 9
   m_Name: NPC_neutral
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -579,9 +610,12 @@ MonoBehaviour:
   thresholdtop: 0
   emotions: {fileID: 7242283488889472467}
   currentEmotion: {fileID: 1662514927674024119}
+  holdPosition: {fileID: 6049066609332797259}
   maxHealth: 100
   disableOnDeath:
   - {fileID: 6557570725391090231}
+  pickupInRange: 0
+  pickup: {fileID: 0}
 --- !u!114 &2380051670268846509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +680,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 7421229250505722632}
   playerMov: {fileID: 6557570725391090231}
+  pickedUp: 0
+--- !u!136 &2565981168422850607
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662079138732520309}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1662115690388835261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +2046,7 @@ GameObject:
   - component: {fileID: 2165617265623094801}
   - component: {fileID: 4943901092699843098}
   - component: {fileID: 7168613158988025743}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2014,7 +2063,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.414, z: 0.136}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6049066609332797259}
   m_Father: {fileID: 1658668248140509741}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
