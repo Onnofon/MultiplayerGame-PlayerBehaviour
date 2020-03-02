@@ -89,6 +89,7 @@ public class PlayerActions : NetworkBehaviour
         if (player.pickup != null)
         {
             player.pickup.Activate();
+            player.pickup = null;
         }
 
     }

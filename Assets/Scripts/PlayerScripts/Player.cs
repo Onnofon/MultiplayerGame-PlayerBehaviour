@@ -8,11 +8,12 @@ public class Player : NetworkBehaviour
 {
     public Player player;
     public PlayerCanvas canvas;
-    public int thresholdlow;
-    public int thresholdtop;
+    public int thresholdLow;
+    public int thresholdTop;
     public Transform emotions;
     public GameObject currentEmotion;
     public Transform holdPosition;
+    public PlayerActions playerActios;
 
     //Checking players current health
     [SyncVar]
@@ -91,12 +92,12 @@ public class Player : NetworkBehaviour
             currentHealth = maxHealth;
         }
 
-        if (transform.position.y < thresholdlow)
+        if (transform.position.y < thresholdLow)
         {
             Die();
         }
 
-        if (transform.position.y > thresholdtop)
+        if (transform.position.y > thresholdTop)
         {
             Die();
 
@@ -156,19 +157,27 @@ public class Player : NetworkBehaviour
     public PickUp pickup;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "PickUp")
+        if (!playerActios.pickedUp)
         {
-            pickupInRange = true;
-            pickup = other.GetComponent<PickUp>();
+            Debug.Log("yesh");
+            if (other.tag == "PickUp")
+            {
+                Debug.Log("yessshhh");
+                pickupInRange = true;
+                pickup = other.GetComponent<PickUp>();
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PickUp")
+        if (playerActios.pickedUp)
         {
-            pickupInRange = false;
-            pickup = null;
+            if (other.tag == "PickUp")
+            {
+                pickupInRange = false;
+                pickup = null;
+            }
         }
     }
 }
