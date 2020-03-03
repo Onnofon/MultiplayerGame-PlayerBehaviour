@@ -69,6 +69,7 @@ public class PlayerActions : NetworkBehaviour
         {
             player.pickup.player = player;
             player.pickup.Deactivate();
+            player.triggerCol.enabled = false;
         }
     }
 
@@ -90,6 +91,7 @@ public class PlayerActions : NetworkBehaviour
         {
             player.pickup.Activate();
             player.pickup = null;
+            player.triggerCol.enabled = true;
         }
 
     }

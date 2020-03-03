@@ -20,11 +20,7 @@ public class PickUp : NetworkBehaviour
     [Command]
     void CmdActivate()
     {
-        objNetId = this.gameObject.GetComponent<NetworkIdentity>();
-        objNetId.AssignClientAuthority(connectionToClient);
         RpcActivate();
-        objNetId.RemoveClientAuthority(connectionToClient);
-
     }
     [ClientRpc]
     void RpcActivate()
@@ -33,6 +29,7 @@ public class PickUp : NetworkBehaviour
         rb.useGravity = true;
         col.enabled = true;
         rb.freezeRotation = false;
+        player = null;
         this.transform.parent = null;
     }
 
@@ -45,12 +42,7 @@ public class PickUp : NetworkBehaviour
     [Command]
     void CmdDeactivate()
     {
-        objNetId = this.gameObject.GetComponent<NetworkIdentity>();
-        objNetId.AssignClientAuthority(connectionToClient);
-        
         RpcDeavtivate();
-        objNetId.RemoveClientAuthority(connectionToClient);
-
     }
     [ClientRpc]
     void RpcDeavtivate()

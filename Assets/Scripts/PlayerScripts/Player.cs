@@ -13,7 +13,8 @@ public class Player : NetworkBehaviour
     public Transform emotions;
     public GameObject currentEmotion;
     public Transform holdPosition;
-    public PlayerActions playerActios;
+    public PlayerActions playerActions;
+    public CapsuleCollider triggerCol;
 
     //Checking players current health
     [SyncVar]
@@ -102,6 +103,11 @@ public class Player : NetworkBehaviour
             Die();
 
         }
+
+        if(!pickupInRange)
+        {
+            pickup = null;
+        }
     }
 
     [ClientRpc]
@@ -157,7 +163,7 @@ public class Player : NetworkBehaviour
     public PickUp pickup;
     private void OnTriggerEnter(Collider other)
     {
-        if (!playerActios.pickedUp)
+        if (!playerActions.pickedUp)
         {
             if (other.tag == "PickUp")
             {
@@ -169,13 +175,9 @@ public class Player : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (playerActios.pickedUp)
+        if (other.tag == "PickUp")
         {
-            if (other.tag == "PickUp")
-            {
-                pickupInRange = false;
-                pickup = null;
-            }
+            pickupInRange = false;
         }
     }
 }

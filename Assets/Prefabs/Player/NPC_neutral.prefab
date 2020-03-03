@@ -611,7 +611,8 @@ MonoBehaviour:
   emotions: {fileID: 7242283488889472467}
   currentEmotion: {fileID: 1662514927674024119}
   holdPosition: {fileID: 6049066609332797259}
-  playerActios: {fileID: -3308635428589690969}
+  playerActions: {fileID: -3308635428589690969}
+  triggerCol: {fileID: 2565981168422850607}
   maxHealth: 100
   disableOnDeath:
   - {fileID: 6557570725391090231}
