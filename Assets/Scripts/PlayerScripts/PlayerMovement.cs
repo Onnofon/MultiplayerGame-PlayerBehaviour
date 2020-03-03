@@ -38,11 +38,6 @@ public class PlayerMovement : NetworkBehaviour
             }
         }
 
-        if (Input.GetKeyDown("escape"))
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-
         if (Input.GetKeyDown("0"))
         {
             //EnterSpectator();

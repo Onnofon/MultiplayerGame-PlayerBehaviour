@@ -6,6 +6,7 @@ public class PlayerCanvas : MonoBehaviour
 {
     // Start is called before the first frame update
     public Player player;
+    public GameObject optionsMenu;
     void Start()
     {
         
@@ -15,5 +16,10 @@ public class PlayerCanvas : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void CurrentEmotion(string emotion)
+    {
+        player.SetEmotion(emotion);
     }
 }

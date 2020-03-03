@@ -7,9 +7,13 @@ using UnityEngine.UI;
 public class Player : NetworkBehaviour
 {
     public Player player;
-    public GameObject canvas;
-    public int thresholdlow;
-    public int thresholdtop;
+    public PlayerCanvas canvas;
+    public int thresholdLow;
+    public int thresholdTop;
+    public Transform emotions;
+    public GameObject currentEmotion;
+    public Transform holdPosition;
+    public PlayerActions playerActios;
 
     //Checking players current health
     [SyncVar]
@@ -39,6 +43,7 @@ public class Player : NetworkBehaviour
         }
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     [SerializeField]
@@ -87,12 +92,12 @@ public class Player : NetworkBehaviour
             currentHealth = maxHealth;
         }
 
-        if (transform.position.y < thresholdlow)
+        if (transform.position.y < thresholdLow)
         {
             Die();
         }
 
-        if (transform.position.y > thresholdtop)
+        if (transform.position.y > thresholdTop)
         {
             Die();
 
@@ -118,5 +123,59 @@ public class Player : NetworkBehaviour
     public void Die()
     {
 
+    }
+
+    [Client]
+    public void SetEmotion(string newEmotion)
+    {
+        CmdSetEmotion(newEmotion);
+    }
+
+    [Command]
+    void CmdSetEmotion(string newEmotion)
+    {
+        RpcSetEmotion(newEmotion);
+    }
+
+    [ClientRpc]
+    void RpcSetEmotion(string newEmotion)
+    {
+        foreach (Transform emotion in emotions)
+        {
+
+            if (emotion.name == newEmotion)
+            {
+                currentEmotion.gameObject.SetActive(false);
+                emotion.gameObject.SetActive(true);
+                currentEmotion = emotion.gameObject;
+
+            }
+        }
+    }
+
+    public bool pickupInRange;
+    public PickUp pickup;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!playerActios.pickedUp)
+        {
+            if (other.tag == "PickUp")
+            {
+                pickupInRange = true;
+                pickup = other.GetComponent<PickUp>();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (playerActios.pickedUp)
+        {
+            if (other.tag == "PickUp")
+            {
+                pickupInRange = false;
+                pickup = null;
+            }
+        }
     }
 }
