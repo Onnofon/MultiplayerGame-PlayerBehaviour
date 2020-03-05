@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,6 +8,8 @@ public class Island : NetworkBehaviour
 {
     public int totalWood;
     public int totalStone;
+    public TextMeshProUGUI woodUI;
+    public TextMeshProUGUI stoneUI;
     public Transform buildings;
     // Start is called before the first frame update
 
@@ -46,5 +49,11 @@ public class Island : NetworkBehaviour
 
             }
         }
+    }
+
+    private void Update()
+    {
+        woodUI.text = "Wood: " + totalWood.ToString();
+        stoneUI.text = "Stone: " + totalStone.ToString();
     }
 }

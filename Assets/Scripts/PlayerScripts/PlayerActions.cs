@@ -11,13 +11,13 @@ public class PlayerActions : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E))
         {
             player.canvas.optionsMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -36,7 +36,7 @@ public class PlayerActions : NetworkBehaviour
             Cursor.visible = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.Q) && player.pickupInRange && !pickedUp)
+        if (Input.GetKeyDown(KeyCode.Q) && player.pickupInRange && !pickedUp)
         {
             pickedUp = true;
             Debug.Log("Gimme");
@@ -47,6 +47,11 @@ public class PlayerActions : NetworkBehaviour
         {
             pickedUp = false;
             DropPickUp();
+        }
+
+        if(Input.GetKeyDown(KeyCode.G) && tempBuilding != null)
+        {
+            GetBuilding();
         }
     }
 
@@ -95,4 +100,32 @@ public class PlayerActions : NetworkBehaviour
         }
 
     }
+
+    private Building tempBuilding;
+    [Client]
+    public void SetBuilding(Building building)
+    {
+        tempBuilding = building;
+    }
+
+    [Client]
+    public void GetBuilding()
+    {
+        CmdGetBuilding();
+    }
+
+
+    [Command]
+    private void CmdGetBuilding()
+    {
+        RpcGetBuilding();
+    }
+
+    [ClientRpc]
+    private void RpcGetBuilding()
+    {
+        tempBuilding.ConstructBuilding();
+    }
+
+
 }

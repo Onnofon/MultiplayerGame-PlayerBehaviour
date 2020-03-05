@@ -10,6 +10,7 @@ public class Building : NetworkBehaviour
     public int[] costs;
     public GameObject building;
     public Island island;
+    public MeshRenderer mesh;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class Building : NetworkBehaviour
         if(other.gameObject.tag == "Player")
         {
             other.gameObject.SendMessage("DisplayCost", costs);
+            other.gameObject.SendMessage("SetBuilding", this);
         }
 
         inRange = true;
@@ -31,21 +33,11 @@ public class Building : NetworkBehaviour
     {
         inRange = false;
         other.gameObject.SendMessage("RemoveText", costs);
-    }
-
-    private void Update()
-    {
-        if(inRange)
-        {
-            if(Input.GetKeyDown(KeyCode.G))
-            {
-                ConstructBuilding();
-            }
-        }
+        other.gameObject.SendMessage("SetBuilding", null);
     }
 
     [Client]
-    private void ConstructBuilding()
+    public void ConstructBuilding()
     {
         CmdConstructBuilding();
     }
