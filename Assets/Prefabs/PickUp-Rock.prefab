@@ -133,7 +133,10 @@ MonoBehaviour:
   player: {fileID: 0}
   rb: {fileID: 2371316720254706448}
   col: {fileID: 1510321016136060126}
+  trigger: {fileID: 8653369356579738871}
   pickedUp: 0
+  woodValue: 0
+  stoneValue: 50
 --- !u!54 &2371316720254706448
 Rigidbody:
   m_ObjectHideFlags: 0

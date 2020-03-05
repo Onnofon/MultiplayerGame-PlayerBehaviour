@@ -180,4 +180,15 @@ public class Player : NetworkBehaviour
             pickupInRange = false;
         }
     }
+
+    private bool inRangeBuildingSign;
+    public void DisplayCost(int[] costs)
+    {
+        canvas.DisplayCost(costs[0].ToString(),costs[1].ToString());
+    }
+
+    public void RemoveText()
+    {
+        canvas.text.gameObject.SetActive(false);
+    }
 }

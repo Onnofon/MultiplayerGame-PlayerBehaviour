@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerCanvas : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerCanvas : MonoBehaviour
     // Start is called before the first frame update
     public Player player;
     public GameObject optionsMenu;
+    public TextMeshProUGUI text;
     void Start()
     {
         
@@ -21,5 +23,11 @@ public class PlayerCanvas : MonoBehaviour
     public void CurrentEmotion(string emotion)
     {
         player.SetEmotion(emotion);
+    }
+
+    public void DisplayCost(string wood, string stone)
+    {
+        text.gameObject.SetActive(true);
+        text.text = "Press G to Constuct building for Wood: " + wood + " Stone: " + stone;
     }
 }
