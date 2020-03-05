@@ -14,19 +14,19 @@ public class Island : NetworkBehaviour
     // Start is called before the first frame update
 
     [Client]
-    public void ConstructBuilding(string newBuilding)
+    public void ConstructBuilding(string newBuilding, GameObject player)
     {
-        CmdConstructBuilding(newBuilding);
+        CmdConstructBuilding(newBuilding, player);
     }
     private Building toBeConstructedBuilding;
     [Command]
-    private void CmdConstructBuilding(string newBuilding)
+    private void CmdConstructBuilding(string newBuilding, GameObject player)
     {
-        RpcConstructBuilding(newBuilding);
+        RpcConstructBuilding(newBuilding, player);
     }
 
     [ClientRpc]
-    private void RpcConstructBuilding(string newBuilding)
+    private void RpcConstructBuilding(string newBuilding, GameObject player)
     {
         foreach (Transform building in buildings)
         {
@@ -36,6 +36,7 @@ public class Island : NetworkBehaviour
                 toBeConstructedBuilding = building.gameObject.GetComponent<Building>();
                 if(toBeConstructedBuilding.woodCost <= totalWood && toBeConstructedBuilding.stoneCost <= totalStone)
                 {
+                    player.gameObject.SendMessage("RemoveText");
                     totalWood -= toBeConstructedBuilding.woodCost;
                     totalStone -= toBeConstructedBuilding.stoneCost;
                     toBeConstructedBuilding.building.SetActive(true);

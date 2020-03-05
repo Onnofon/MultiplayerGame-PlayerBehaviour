@@ -36,20 +36,20 @@ public class PlayerActions : NetworkBehaviour
             Cursor.visible = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && player.pickupInRange && !pickedUp)
+        if (Input.GetMouseButtonDown(0) && player.pickupInRange && !pickedUp)
         {
             pickedUp = true;
             Debug.Log("Gimme");
             PickUp();
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && pickedUp)
+        if (Input.GetMouseButtonDown(1) && pickedUp)
         {
             pickedUp = false;
             DropPickUp();
         }
 
-        if(Input.GetKeyDown(KeyCode.G) && tempBuilding != null)
+        if(Input.GetKeyDown(KeyCode.F) && tempBuilding != null)
         {
             GetBuilding();
         }
@@ -124,7 +124,7 @@ public class PlayerActions : NetworkBehaviour
     [ClientRpc]
     private void RpcGetBuilding()
     {
-        tempBuilding.ConstructBuilding();
+        tempBuilding.ConstructBuilding(this.gameObject);
     }
 
 

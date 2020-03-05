@@ -28,6 +28,6 @@ public class PlayerCanvas : MonoBehaviour
     public void DisplayCost(string wood, string stone)
     {
         text.gameObject.SetActive(true);
-        text.text = "Press G to Constuct building for Wood: " + wood + " Stone: " + stone;
+        text.text = "Press F to Constuct building for Wood: " + wood + " Stone: " + stone;
     }
 }

@@ -651,9 +651,9 @@ MonoBehaviour:
   onGround: 0
   rb: {fileID: 2859404568468207643}
   speed: 0
-  normalSpeed: 7
-  speedSprint: 12
-  jumpTakeOffSpeed: 6
+  normalSpeed: 5
+  speedSprint: 8
+  jumpTakeOffSpeed: 5
 --- !u!136 &6621263401516742064
 CapsuleCollider:
   m_ObjectHideFlags: 0

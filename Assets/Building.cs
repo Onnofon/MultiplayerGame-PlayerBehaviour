@@ -32,25 +32,25 @@ public class Building : NetworkBehaviour
     private void OnTriggerExit(Collider other)
     {
         inRange = false;
-        other.gameObject.SendMessage("RemoveText", costs);
+        other.gameObject.SendMessage("RemoveText");
         other.gameObject.SendMessage("SetBuilding", null);
     }
 
     [Client]
-    public void ConstructBuilding()
+    public void ConstructBuilding(GameObject player)
     {
-        CmdConstructBuilding();
+        CmdConstructBuilding(player);
     }
 
     [Command]
-    private void CmdConstructBuilding()
+    private void CmdConstructBuilding(GameObject player)
     {
-        RpcConstructBuilding();
+        RpcConstructBuilding(player);
     }
 
     [ClientRpc]
-    private void RpcConstructBuilding()
+    private void RpcConstructBuilding(GameObject player)
     {
-        island.ConstructBuilding(this.name);
+        island.ConstructBuilding(this.name, player);
     }
 }

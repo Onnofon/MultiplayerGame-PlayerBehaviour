@@ -9,7 +9,6 @@ public class PickUp : NetworkBehaviour
     public Rigidbody rb;
     public BoxCollider col;
     public BoxCollider trigger;
-    private NetworkIdentity objNetId;
     public bool pickedUp;
     public int woodValue;
     public int stoneValue;
@@ -53,7 +52,6 @@ public class PickUp : NetworkBehaviour
     {
         col.enabled = false;
         rb.useGravity = false;
-        rb.freezeRotation = true;
         pickedUp = true;
         
     }
@@ -63,6 +61,7 @@ public class PickUp : NetworkBehaviour
         if (pickedUp)
         {
             trigger.enabled = false;
+            rb.freezeRotation = true;
             this.transform.position = player.holdPosition.transform.position;
             this.transform.parent = player.transform;
         }
