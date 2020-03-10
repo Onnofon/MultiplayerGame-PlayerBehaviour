@@ -17,7 +17,7 @@ public class PlayerActions : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.Q))
         {
             player.canvas.optionsMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -49,10 +49,57 @@ public class PlayerActions : NetworkBehaviour
             DropPickUp();
         }
 
-        if(Input.GetKeyDown(KeyCode.F) && tempBuilding != null)
+        //if(Input.GetKeyDown(KeyCode.F) && tempBuilding != null)
+        //{
+        //    GetBuilding();
+        //}
+
+        if(Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
         {
-            GetBuilding();
+            NextBuilding();
         }
+        //if (Input.GetKeyDown(KeyCode.Q) && player.inRangeBuildingBoard)
+        //{
+        //    player.buildBoard.Previous();
+        //}
+        if (Input.GetKeyDown(KeyCode.F) && player.inRangeBuildingBoard)
+        {
+            Vote();
+        }
+    }
+
+    [Client]
+    void NextBuilding()
+    {
+        CmdNextBuilding();
+    }
+
+    [Command]
+    void CmdNextBuilding()
+    {
+        RpcNextBuilding();
+    }
+    [ClientRpc]
+    void RpcNextBuilding()
+    {
+        player.buildBoard.Next();
+    }
+
+    [Client]
+    void Vote()
+    {
+        CmdVote();
+    }
+
+    [Command]
+    void CmdVote()
+    {
+        RpcVote();
+    }
+    [ClientRpc]
+    void RpcVote()
+    {
+        player.buildBoard.Vote();
     }
 
     [Client]

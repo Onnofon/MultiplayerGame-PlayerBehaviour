@@ -617,6 +617,8 @@ MonoBehaviour:
   disableOnDeath:
   - {fileID: 6557570725391090231}
   pickupInRange: 0
+  inRangeBuildingBoard: 0
+  buildBoard: {fileID: 0}
   pickup: {fileID: 0}
 --- !u!114 &2380051670268846509
 MonoBehaviour:
@@ -634,6 +636,7 @@ MonoBehaviour:
   - {fileID: 6557570725391090231}
   - {fileID: 7168613158988025743}
   - {fileID: 2165617265623094801}
+  - {fileID: -3308635428589690969}
   - {fileID: -3308635428589690969}
   remoteLayerName: RemotePlayer
 --- !u!114 &6557570725391090231
@@ -2063,7 +2066,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5476942498463863052}
   m_LocalRotation: {x: -0.002618131, y: -0, z: -0, w: 0.9999966}
-  m_LocalPosition: {x: 0, y: 1.494, z: 0.449}
+  m_LocalPosition: {x: 0, y: 1.494, z: 0.416}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6049066609332797259}

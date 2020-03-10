@@ -160,6 +160,8 @@ public class Player : NetworkBehaviour
     }
 
     public bool pickupInRange;
+    public bool inRangeBuildingBoard;
+    public BuildBoard buildBoard;
     public PickUp pickup;
     private void OnTriggerEnter(Collider other)
     {
@@ -171,6 +173,12 @@ public class Player : NetworkBehaviour
                 pickup = other.GetComponent<PickUp>();
             }
         }
+
+        if(other.tag == "BuildingBoard")
+        {
+            inRangeBuildingBoard = true;
+            buildBoard = other.gameObject.GetComponent<BuildBoard>();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -179,6 +187,12 @@ public class Player : NetworkBehaviour
         {
             pickupInRange = false;
         }
+
+        if (other.tag == "BuildingBoard")
+        {
+            inRangeBuildingBoard = false;
+        }
+
     }
 
     private bool inRangeBuildingSign;

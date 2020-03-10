@@ -11,6 +11,7 @@ public class Building : NetworkBehaviour
     public GameObject building;
     public Island island;
     public MeshRenderer mesh;
+    public int votes;
 
     private void Start()
     {
