@@ -52,7 +52,5 @@ public class camMouseLook : MonoBehaviour
         {
             mouseLook.y = 90;
         }
-
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 }
