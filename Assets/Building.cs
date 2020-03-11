@@ -10,7 +10,6 @@ public class Building : NetworkBehaviour
     public int[] costs;
     public GameObject building;
     public Island island;
-    public MeshRenderer mesh;
     public int votes;
 
     private void Start()
@@ -35,23 +34,5 @@ public class Building : NetworkBehaviour
         inRange = false;
         other.gameObject.SendMessage("RemoveText");
         other.gameObject.SendMessage("SetBuilding", null);
-    }
-
-    [Client]
-    public void ConstructBuilding(GameObject player)
-    {
-        CmdConstructBuilding(player);
-    }
-
-    [Command]
-    private void CmdConstructBuilding(GameObject player)
-    {
-        RpcConstructBuilding(player);
-    }
-
-    [ClientRpc]
-    private void RpcConstructBuilding(GameObject player)
-    {
-        island.ConstructBuilding(this.name, player);
     }
 }

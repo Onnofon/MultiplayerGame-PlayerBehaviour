@@ -11,22 +11,23 @@ public class Island : NetworkBehaviour
     public TextMeshProUGUI woodUI;
     public TextMeshProUGUI stoneUI;
     public Transform buildings;
+    public BuildBoard buildingBoard;
     // Start is called before the first frame update
 
     [Client]
-    public void ConstructBuilding(string newBuilding, GameObject player)
+    public void ConstructBuilding(string newBuilding)
     {
-        CmdConstructBuilding(newBuilding, player);
+        CmdConstructBuilding(newBuilding);
     }
     private Building toBeConstructedBuilding;
     [Command]
-    private void CmdConstructBuilding(string newBuilding, GameObject player)
+    private void CmdConstructBuilding(string newBuilding)
     {
-        RpcConstructBuilding(newBuilding, player);
+        RpcConstructBuilding(newBuilding);
     }
 
     [ClientRpc]
-    private void RpcConstructBuilding(string newBuilding, GameObject player)
+    private void RpcConstructBuilding(string newBuilding)
     {
         foreach (Transform building in buildings)
         {
@@ -36,12 +37,12 @@ public class Island : NetworkBehaviour
                 toBeConstructedBuilding = building.gameObject.GetComponent<Building>();
                 if(toBeConstructedBuilding.woodCost <= totalWood && toBeConstructedBuilding.stoneCost <= totalStone)
                 {
-                    player.gameObject.SendMessage("RemoveText");
                     totalWood -= toBeConstructedBuilding.woodCost;
                     totalStone -= toBeConstructedBuilding.stoneCost;
                     toBeConstructedBuilding.building.SetActive(true);
-                    toBeConstructedBuilding.building.gameObject.transform.parent = null;
-                    Destroy(toBeConstructedBuilding.gameObject);
+                    buildingBoard.RemoveBuilding(newBuilding);
+                    //toBeConstructedBuilding.building.gameObject.transform.parent = null;
+                    //Destroy(toBeConstructedBuilding.gameObject);
                 }
                 else
                 {

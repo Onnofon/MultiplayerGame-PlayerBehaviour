@@ -8,10 +8,10 @@ public class PlayerActions : NetworkBehaviour
     public Player player;
     public PlayerMovement playerMov;
     public bool pickedUp;
+    public int votes = 1;
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -99,7 +99,7 @@ public class PlayerActions : NetworkBehaviour
     [ClientRpc]
     void RpcVote()
     {
-        player.buildBoard.Vote();
+        player.buildBoard.ConstructBuilding();
     }
 
     [Client]
@@ -147,32 +147,4 @@ public class PlayerActions : NetworkBehaviour
         }
 
     }
-
-    private Building tempBuilding;
-    [Client]
-    public void SetBuilding(Building building)
-    {
-        tempBuilding = building;
-    }
-
-    [Client]
-    public void GetBuilding()
-    {
-        CmdGetBuilding();
-    }
-
-
-    [Command]
-    private void CmdGetBuilding()
-    {
-        RpcGetBuilding();
-    }
-
-    [ClientRpc]
-    private void RpcGetBuilding()
-    {
-        tempBuilding.ConstructBuilding(this.gameObject);
-    }
-
-
 }

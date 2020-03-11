@@ -12,7 +12,10 @@ public class BuildBoard : NetworkBehaviour
     public TextMeshProUGUI woodUI;
     public TextMeshProUGUI stoneUI;
     public TextMeshProUGUI buildingName;
+    public TextMeshProUGUI stoneIsland;
+    public TextMeshProUGUI woodIsland;
     public GameObject[] votes;
+    //public GameObject buildButton;
     public int listCounter;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,23 @@ public class BuildBoard : NetworkBehaviour
         UpdateUI();
     }
 
+    [Client]
+    public void RemoveBuilding(string building)
+    {
+        CmdRemoveBuilding(building);
+    }
+
+    [Command]
+    private void CmdRemoveBuilding(string building)
+    {
+        RpcRemoveBuilding(building);
+    }
+    [ClientRpc]
+    private void RpcRemoveBuilding(string currentbuilding)
+    {
+        buildings.Remove(currentBuilding);
+        UpdateUI();
+    }
     // Update is called once per frame
     [Client]
     public void Next()
@@ -42,16 +62,11 @@ public class BuildBoard : NetworkBehaviour
     public void RpcNext()
     {
         listCounter++;
-        if (listCounter <= buildings.Count)
+        if(listCounter > buildings.Count)
         {
-            currentBuilding = buildings[listCounter];
-            
-        }
-        else if(listCounter > buildings.Count)
-        {
-            currentBuilding = buildings[0];
             listCounter = 0;
         }
+        currentBuilding = buildings[listCounter];
         UpdateUI();
     }
 
@@ -99,12 +114,21 @@ public class BuildBoard : NetworkBehaviour
         {
             item.SetActive(false);
         }
-        //woodUI.text = "Wood: " + currentBuilding.woodCost.ToString();
-        //stoneUI.text = "Stone: " + currentBuilding.stoneCost.ToString();
-        //buildingName.text = currentBuilding.name;
-        for (int i = 0; i < currentBuilding.votes; i++)
+
+        if (currentBuilding.votes != 3)
         {
-            votes[i].SetActive(true);
+
+            //woodUI.text = "Wood: " + currentBuilding.woodCost.ToString();
+            //stoneUI.text = "Stone: " + currentBuilding.stoneCost.ToString();
+            //buildingName.text = currentBuilding.name;
+            for (int i = 0; i < currentBuilding.votes; i++)
+            {
+                votes[i].SetActive(true);
+            }
+        }
+        else
+        {
+            //buildButton.SetActive(true);
         }
     }
 
@@ -128,8 +152,39 @@ public class BuildBoard : NetworkBehaviour
 
     private void Update()
     {
-        woodUI.text = "Wood: " + currentBuilding.woodCost.ToString();
-        stoneUI.text = "Stone: " + currentBuilding.stoneCost.ToString();
+        woodUI.text = "Wood cost: " + currentBuilding.woodCost.ToString();
+        stoneUI.text = "Stone cost: " + currentBuilding.stoneCost.ToString();
+
+        if (currentBuilding.woodCost > island.totalWood)
+            woodIsland.color = Color.red;
+        else
+            woodIsland.color = Color.white;
+
+        if (currentBuilding.stoneCost > island.totalStone)
+            stoneIsland.color = Color.red;
+        else
+            stoneIsland.color = Color.white;
+
+        stoneIsland.text = island.totalStone.ToString();
+        woodIsland.text = island.totalWood.ToString();
         buildingName.text = currentBuilding.name;
+    }
+
+    [Client]
+    public void ConstructBuilding()
+    {
+        CmdConstructBuilding();
+    }
+
+    [Command]
+    private void CmdConstructBuilding()
+    {
+        RpcConstructBuilding();
+    }
+
+    [ClientRpc]
+    private void RpcConstructBuilding( )
+    {
+        island.ConstructBuilding(currentBuilding.name);
     }
 }
