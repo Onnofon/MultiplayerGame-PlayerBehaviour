@@ -27,13 +27,13 @@ public class PickUp : NetworkBehaviour
     [ClientRpc]
     void RpcActivate()
     {
+        this.transform.parent = null;
         pickedUp = false;
         rb.useGravity = true;
         col.enabled = true;
         trigger.enabled = true;
         rb.freezeRotation = false;
         player = null;
-        this.transform.parent = null;
     }
 
     [Client]

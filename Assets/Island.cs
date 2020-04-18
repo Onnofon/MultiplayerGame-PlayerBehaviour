@@ -40,13 +40,13 @@ public class Island : NetworkBehaviour
                     totalWood -= toBeConstructedBuilding.woodCost;
                     totalStone -= toBeConstructedBuilding.stoneCost;
                     toBeConstructedBuilding.building.SetActive(true);
-                    buildingBoard.RemoveBuilding(newBuilding);
+                    buildingBoard.RemoveBuilding();
                     //toBeConstructedBuilding.building.gameObject.transform.parent = null;
                     //Destroy(toBeConstructedBuilding.gameObject);
                 }
                 else
                 {
-                    Debug.Log("Not enough bish");
+                    Debug.Log("Not enough");
                 }
 
             }

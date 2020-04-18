@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    public Player player;
     public bool onGround;
     public Rigidbody rb;
     public float speed;
@@ -35,6 +36,7 @@ public class PlayerMovement : NetworkBehaviour
             {
                 rb.velocity = new Vector3(0f, jumpTakeOffSpeed, 0f);
                 onGround = false;
+                player.currentHunger -= 1;
             }
         }
 

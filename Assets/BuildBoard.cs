@@ -25,25 +25,24 @@ public class BuildBoard : NetworkBehaviour
             buildings.Add(building.gameObject.GetComponent<Building>());
         }
         currentBuilding = buildings[0];
-        UpdateUI();
     }
 
     [Client]
-    public void RemoveBuilding(string building)
+    public void RemoveBuilding()
     {
-        CmdRemoveBuilding(building);
+        CmdRemoveBuilding();
     }
 
     [Command]
-    private void CmdRemoveBuilding(string building)
+    private void CmdRemoveBuilding()
     {
-        RpcRemoveBuilding(building);
+        RpcRemoveBuilding();
     }
     [ClientRpc]
-    private void RpcRemoveBuilding(string currentbuilding)
+    private void RpcRemoveBuilding()
     {
         buildings.Remove(currentBuilding);
-        UpdateUI();
+        Next();
     }
     // Update is called once per frame
     [Client]
@@ -62,92 +61,11 @@ public class BuildBoard : NetworkBehaviour
     public void RpcNext()
     {
         listCounter++;
-        if(listCounter > buildings.Count)
+        if(listCounter > buildings.Count-1)
         {
             listCounter = 0;
         }
         currentBuilding = buildings[listCounter];
-        UpdateUI();
-    }
-
-    //[Client]
-    //public void Previous()
-    //{
-    //    CmdPrevious();
-    //}
-
-    //[Command]
-    //public void CmdPrevious()
-    //{
-    //    RpcPrevious();
-    //}
-    //[ClientRpc]
-    //public void RpcPrevious()
-    //{
-    //    listCounter--;
-    //    if (listCounter >= 0)
-    //    {
-    //        currentBuilding = buildings[listCounter];
-    //    }
-    //    else if(listCounter < 0)
-    //    {
-    //        currentBuilding = buildings[buildings.Count];
-    //        listCounter = buildings.Count;
-    //    }
-
-    //    UpdateUI();
-    //}
-    [Client]
-    private void UpdateUI()
-    {
-        CmdUpdateUI();
-    }
-    [Command]
-    private void CmdUpdateUI()
-    {
-        RpcUpdateUI();
-    }
-    [ClientRpc]
-    private void RpcUpdateUI()
-    {
-        foreach (var item in votes)
-        {
-            item.SetActive(false);
-        }
-
-        if (currentBuilding.votes != 3)
-        {
-
-            //woodUI.text = "Wood: " + currentBuilding.woodCost.ToString();
-            //stoneUI.text = "Stone: " + currentBuilding.stoneCost.ToString();
-            //buildingName.text = currentBuilding.name;
-            for (int i = 0; i < currentBuilding.votes; i++)
-            {
-                votes[i].SetActive(true);
-            }
-        }
-        else
-        {
-            //buildButton.SetActive(true);
-        }
-    }
-
-    [Client]
-    public void Vote()
-    {
-        CmdVote();
-    }
-
-    [Command]
-    private void CmdVote()
-    {
-        RpcVote();
-    }
-    [ClientRpc]
-    private void RpcVote()
-    {
-        currentBuilding.votes++;
-        UpdateUI();
     }
 
     private void Update()

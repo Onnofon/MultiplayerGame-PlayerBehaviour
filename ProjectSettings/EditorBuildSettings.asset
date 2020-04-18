@@ -23,10 +23,4 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Scenes/Level 03 Arena.unity
     guid: 5c7816c78a2d7ac40af69e3e71fd57c9
-  - enabled: 0
-    path: Assets/_Scenes/Islands.unity
-    guid: 41873f79d2020c6489ccfb82f2b3dc68
-  - enabled: 0
-    path: Assets/Store/NaturePackLite/Scenes/Demo.unity
-    guid: 7b0819d80ff6b274682824a390d03f5f
   m_configObjects: {}

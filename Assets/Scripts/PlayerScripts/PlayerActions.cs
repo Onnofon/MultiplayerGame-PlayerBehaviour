@@ -40,7 +40,10 @@ public class PlayerActions : NetworkBehaviour
         {
             pickedUp = true;
             Debug.Log("Gimme");
-            PickUp();
+            if(player.pickup != null)
+            {
+                PickUp();
+            }
         }
 
         if (Input.GetMouseButtonDown(1) && pickedUp)
@@ -65,6 +68,15 @@ public class PlayerActions : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.F) && player.inRangeBuildingBoard)
         {
             Vote();
+        }
+        else if(Input.GetKeyDown(KeyCode.F) && player.inRangeFarm)
+        {
+            PlantGrain();
+        }
+
+        if (Input.GetKeyDown(KeyCode.T) && player.inRangePlayer)
+        {
+            Trade();
         }
     }
 
@@ -103,6 +115,40 @@ public class PlayerActions : NetworkBehaviour
     }
 
     [Client]
+    void Trade()
+    {
+        CmdTrade();
+    }
+
+    [Command]
+    void CmdTrade()
+    {
+        RpcTrade();
+    }
+    [ClientRpc]
+    void RpcTrade()
+    {
+        player.otherPlayer.TradeRequest(player.pickup.name);
+    }
+
+    [Client]
+    void PlantGrain()
+    {
+        CmdPlantGrain();
+    }
+
+    [Command]
+    void CmdPlantGrain()
+    {
+        RpcPlantGrain();
+    }
+    [ClientRpc]
+    void RpcPlantGrain()
+    {
+        player.farm.PlantGrain();
+    }
+
+    [Client]
     void PickUp()
     {
         CmdPickup();
@@ -121,7 +167,7 @@ public class PlayerActions : NetworkBehaviour
         {
             player.pickup.player = player;
             player.pickup.Deactivate();
-            player.triggerCol.enabled = false;
+            //player.triggerCol.enabled = false;
         }
     }
 

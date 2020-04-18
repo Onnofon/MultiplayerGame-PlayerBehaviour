@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class Player : NetworkBehaviour
 {
     public Player player;
+    public PlayerMovement playerMov;
     public PlayerCanvas canvas;
     public int thresholdLow;
     public int thresholdTop;
     public Transform emotions;
+    public Transform emotes;
     public GameObject currentEmotion;
     public Transform holdPosition;
     public PlayerActions playerActions;
@@ -18,8 +20,10 @@ public class Player : NetworkBehaviour
 
     //Checking players current health
     [SyncVar]
-    private int currentHealth;
-    public int maxHealth = 100;
+    public int currentHealth;
+    public int maxHealth;
+    public int currentHunger;
+    public int maxHunger;
 
     //Checking if the players are dead
     [SyncVar]
@@ -72,6 +76,7 @@ public class Player : NetworkBehaviour
         isDead = false;
 
         currentHealth = maxHealth;
+        currentHunger = maxHunger;
 
         for (int i = 0; i < disableOnDeath.Length; i++)
         {
@@ -159,18 +164,62 @@ public class Player : NetworkBehaviour
         }
     }
 
+    [Client]
+    public void SetEmote(string newEmote)
+    {
+        CmdSetEmote(newEmote);
+    }
+
+    [Command]
+    void CmdSetEmote(string newEmote)
+    {
+        RpcSetEmote(newEmote);
+    }
+    public Image img;
+    [ClientRpc]
+    void RpcSetEmote(string newEmote)
+    {
+        foreach (Transform emote in emotes)
+        {
+
+            if (emote.name == newEmote)
+            {
+                img = emote.gameObject.GetComponent<Image>();
+                img.color = new Color(1, 1, 1, 1);
+
+                for (float i = 5; i >= 0; i -= Time.deltaTime)
+                {
+                    if(i <= 0)
+                    {
+                        img.color = new Color(1, 1, 1, 0);
+                    }
+                }
+            }
+        }
+    }
+
     public bool pickupInRange;
     public bool inRangeBuildingBoard;
+    public bool inRangeFarm;
+    public Farm farm;
     public BuildBoard buildBoard;
     public PickUp pickup;
+    public HeavyResource heavyResource;
+    public bool inRangePlayer;
+    public Player otherPlayer;
     private void OnTriggerEnter(Collider other)
     {
         if (!playerActions.pickedUp)
         {
-            if (other.tag == "PickUp")
+            if (other.tag == "PickUp" || other.tag == "Grain")
             {
                 pickupInRange = true;
                 pickup = other.GetComponent<PickUp>();
+            }
+            else if(other.tag == "HeavyResource")
+            {
+                pickupInRange = true;
+                heavyResource = other.GetComponent<HeavyResource>();
             }
         }
 
@@ -178,6 +227,19 @@ public class Player : NetworkBehaviour
         {
             inRangeBuildingBoard = true;
             buildBoard = other.gameObject.GetComponent<BuildBoard>();
+        }
+
+        if (other.tag == "Farm")
+        {
+            inRangeFarm = true;
+            farm = other.gameObject.GetComponent<Farm>();
+        }
+
+        if(other.tag == "Player" && playerActions.pickedUp)
+        {
+            inRangePlayer = true;
+            otherPlayer = other.gameObject.GetComponent<Player>();
+            canvas.TradeOption(pickup.name);
         }
     }
 
@@ -193,6 +255,33 @@ public class Player : NetworkBehaviour
             inRangeBuildingBoard = false;
         }
 
+        if (other.tag == "Player")
+        {
+            inRangePlayer = false;
+            otherPlayer = null;
+            canvas.text.gameObject.SetActive(false);
+        }
+
+    }
+
+    private PickUp tempSlot;
+    [Client]
+    public void TradeAccepted()
+    {
+        CmdTradeAccepted();
+    }
+
+    [Command]
+    void CmdTradeAccepted()
+    {
+        RpcTradeAccepted();
+    }
+    [ClientRpc]
+    void RpcTradeAccepted()
+    {
+        tempSlot = pickup;
+        pickup = otherPlayer.pickup;
+        otherPlayer.pickup = tempSlot;
     }
 
     private bool inRangeBuildingSign;
@@ -204,5 +293,23 @@ public class Player : NetworkBehaviour
     public void RemoveText()
     {
         canvas.text.gameObject.SetActive(false);
+    }
+
+    [Client]
+    public void TradeRequest(string theirOffer)
+    {
+        CmdTradeRequest(theirOffer);
+    }
+
+    [Command]
+    public void CmdTradeRequest(string theirOffer)
+    {
+        RpcTradeRequest(theirOffer);
+    }
+
+    [ClientRpc]
+    public void RpcTradeRequest(string theirOffer)
+    {
+        canvas.TradeRequest(theirOffer, pickup.ToString());
     }
 }
