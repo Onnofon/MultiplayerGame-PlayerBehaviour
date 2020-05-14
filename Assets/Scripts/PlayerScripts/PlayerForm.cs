@@ -26,9 +26,10 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcWoodcutter()
     {
-        axe.gameObject.SetActive(true);
-        pickaxe.gameObject.SetActive(false);
-        bag.gameObject.SetActive(false);
+        //axe.gameObject.SetActive(true);
+        //pickaxe.gameObject.SetActive(false);
+        //bag.gameObject.SetActive(false);
+        tool = axe;
     }
 
     [Client]
@@ -50,6 +51,7 @@ public class PlayerForm : NetworkBehaviour
         axe.gameObject.SetActive(false);
         pickaxe.gameObject.SetActive(true);
         bag.gameObject.SetActive(false);
+        tool = pickaxe;
     }
 
     [Client]
@@ -71,6 +73,7 @@ public class PlayerForm : NetworkBehaviour
         axe.gameObject.SetActive(false);
         pickaxe.gameObject.SetActive(false);
         bag.gameObject.SetActive(true);
+        tool = bag;
     }
 
     [Client]
@@ -92,5 +95,6 @@ public class PlayerForm : NetworkBehaviour
         axe.gameObject.SetActive(false);
         pickaxe.gameObject.SetActive(false);
         bag.gameObject.SetActive(false);
+        tool = null;
     }
 }

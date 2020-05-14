@@ -8,11 +8,14 @@ public class PlayerActions : NetworkBehaviour
     public Player player;
     public PlayerMovement playerMov;
     public PlayerInventory playerInv;
+    public PlayerForm playerForm;
     public bool pickedUp;
     public int votes = 1;
     // Start is called before the first frame update
     void Start()
     {
+        playerForm.Woodcutter();
+        playerInv.SetHoldItem(playerForm.tool.name);
     }
 
     // Update is called once per frame
@@ -86,6 +89,27 @@ public class PlayerActions : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.T) && player.inRangePlayer)
         {
             Trade();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            playerInv.SetHoldItem(playerForm.tool.name);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            playerInv.SetHoldItem(playerInv.items[1].name);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+
         }
     }
 

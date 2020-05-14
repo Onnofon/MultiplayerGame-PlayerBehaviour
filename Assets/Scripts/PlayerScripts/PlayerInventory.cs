@@ -12,8 +12,9 @@ public class PlayerInventory : NetworkBehaviour
 
     private void Start()
     {
-        items.Add(playerForm.tool);
+        items[1] = playerForm.tool;
     }
+
     public void AddToIventory(GameObject item)
     {
         for (int i = 0; i < items.Count; i++)
