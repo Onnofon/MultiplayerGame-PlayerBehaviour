@@ -17,6 +17,7 @@ public class Player : NetworkBehaviour
     public Transform holdPosition;
     public PlayerActions playerActions;
     public CapsuleCollider triggerCol;
+    public bool pendingTradeOffer;
 
     //Checking players current health
     [SyncVar]
@@ -282,6 +283,7 @@ public class Player : NetworkBehaviour
         tempSlot = pickup;
         pickup = otherPlayer.pickup;
         otherPlayer.pickup = tempSlot;
+        pendingTradeOffer = true;
     }
 
     private bool inRangeBuildingSign;
@@ -310,6 +312,8 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void RpcTradeRequest(string theirOffer)
     {
+        pendingTradeOffer = true;
+        
         canvas.TradeRequest(theirOffer, pickup.ToString());
     }
 }

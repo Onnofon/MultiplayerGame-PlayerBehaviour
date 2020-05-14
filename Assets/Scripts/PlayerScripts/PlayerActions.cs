@@ -7,6 +7,7 @@ public class PlayerActions : NetworkBehaviour
 {
     public Player player;
     public PlayerMovement playerMov;
+    public PlayerInventory playerInv;
     public bool pickedUp;
     public int votes = 1;
     // Start is called before the first frame update
@@ -26,8 +27,11 @@ public class PlayerActions : NetworkBehaviour
         else
         {
             player.canvas.optionsMenu.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            if (!player.pendingTradeOffer)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
 
         if (Input.GetKey("escape"))
@@ -36,28 +40,33 @@ public class PlayerActions : NetworkBehaviour
             Cursor.visible = true;
         }
 
-        if (Input.GetMouseButtonDown(0) && player.pickupInRange && !pickedUp)
-        {
-            pickedUp = true;
-            Debug.Log("Gimme");
-            if(player.pickup != null)
-            {
-                PickUp();
-            }
-        }
+        //if (Input.GetMouseButtonDown(0) && player.pickupInRange && !pickedUp)
+        //{
+        //    pickedUp = true;
+        //    Debug.Log("Gimme");
+        //    if(player.pickup != null)
+        //    {
+        //        PickUp();
+        //    }
+        //}
 
-        if (Input.GetMouseButtonDown(1) && pickedUp)
-        {
-            pickedUp = false;
-            DropPickUp();
-        }
+        //if (Input.GetMouseButtonDown(1) && pickedUp)
+        //{
+        //    pickedUp = false;
+        //    DropPickUp();
+        //}
 
         //if(Input.GetKeyDown(KeyCode.F) && tempBuilding != null)
         //{
         //    GetBuilding();
         //}
 
-        if(Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
+        if (Input.GetMouseButtonDown(0) && player.pickupInRange)
+        {
+            playerInv.AddToIventory(player.pickup.gameObject);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
         {
             NextBuilding();
         }
@@ -128,7 +137,10 @@ public class PlayerActions : NetworkBehaviour
     [ClientRpc]
     void RpcTrade()
     {
-        player.otherPlayer.TradeRequest(player.pickup.name);
+        if (!player.otherPlayer.pendingTradeOffer)
+        {
+            player.otherPlayer.TradeRequest(player.pickup.name);
+        }
     }
 
     [Client]

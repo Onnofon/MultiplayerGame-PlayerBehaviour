@@ -4058,7 +4058,7 @@ PrefabInstance:
     - target: {fileID: 4930266834957831790, guid: 48525ea3edaea564f8f8de0ef674056e,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Wood (2)
+      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
@@ -5401,7 +5401,7 @@ PrefabInstance:
     - target: {fileID: 4930266834957831790, guid: 48525ea3edaea564f8f8de0ef674056e,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Wood (1)
+      value: Wood
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
@@ -5731,7 +5731,7 @@ PrefabInstance:
     - target: {fileID: 4930266834957831790, guid: 48525ea3edaea564f8f8de0ef674056e,
         type: 3}
       propertyPath: m_Name
-      value: Pickup_Wood
+      value: Wood
       objectReference: {fileID: 0}
     - target: {fileID: 7743496861117866614, guid: 48525ea3edaea564f8f8de0ef674056e,
         type: 3}
@@ -6100,10 +6100,35 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Grain
       objectReference: {fileID: 0}
+    - target: {fileID: 4285260985787711377, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285260985935327442, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285260986462963278, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock
+      objectReference: {fileID: 0}
     - target: {fileID: 4285260986914809731, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285260986914809731, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285260987135480229, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 5698748321179591500, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
         type: 3}
@@ -6589,6 +6614,11 @@ PrefabInstance:
         type: 3}
       propertyPath: costs.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7426388787004873280, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock
       objectReference: {fileID: 0}
     - target: {fileID: 7916289755392176167, guid: b13d3bfc3c294794cb7fd2e96584eb3c,
         type: 3}

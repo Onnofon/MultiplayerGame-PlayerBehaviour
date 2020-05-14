@@ -13,15 +13,28 @@ public class PlayerCanvas : MonoBehaviour
     public TextMeshProUGUI tradeText;
     public Image hungerBar;
     public GameObject tradePanel;
+    public List<TextMeshProUGUI> inventorySlots = new List<TextMeshProUGUI>();
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         hungerBar.fillAmount = (float)player.currentHunger / (float)player.maxHunger;
+        for (int i = 0; i < player.playerActions.playerInv.items.Count; i++)
+        {
+            
+            if(player.playerActions.playerInv.items[i] == null)
+            {
+                inventorySlots[i].text = "empty";
+            }
+            else
+            {
+                inventorySlots[i].text = player.playerActions.playerInv.items[i].name;
+            }
+        }
     }
 
     public void CurrentEmotion(string emotion)
@@ -55,11 +68,17 @@ public class PlayerCanvas : MonoBehaviour
     public void Decline()
     {
         tradePanel.SetActive(false);
+        player.pendingTradeOffer = false;
     }
 
     public void Accept()
     {
         tradePanel.SetActive(false);
         player.TradeAccepted();
+    }
+
+    public void Inventory()
+    {
+
     }
 }
