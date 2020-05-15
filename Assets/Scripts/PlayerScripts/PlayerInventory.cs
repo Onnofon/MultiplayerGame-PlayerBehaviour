@@ -5,21 +5,23 @@ using UnityEngine.Networking;
 
 public class PlayerInventory : NetworkBehaviour
 {
-    public List<GameObject> items = new List<GameObject>();
+    public List<string> items = new List<string>();
     public PlayerForm playerForm;
     public Transform holdItems;
     public GameObject currentHoldItem;
-
+    public int currentSlot;
+    public GameObject rock;
+    public GameObject wood;
+    public GameObject mushroom;
     private void Start()
     {
-        items[1] = playerForm.tool;
+        items[0] = playerForm.tool.name;
     }
-
-    public void AddToIventory(GameObject item)
+    public void AddToIventory(string item)
     {
         for (int i = 0; i < items.Count; i++)
         {
-            if(items[i] == null)
+            if (items[i] == "")
             {
                 items[i] = item;
                 break;
@@ -27,12 +29,12 @@ public class PlayerInventory : NetworkBehaviour
         }
     }
 
-    public void RemoveFromIventory(GameObject item)
+    public void RemoveFromIventory(string item)
     {
         int count = items.Count;
         for (int i = 0; i < count; i++)
         {
-            if (items[i].name == item.name)
+            if (items[i] == item)
             {
                 items.RemoveAt(i);
                 return;
@@ -66,5 +68,42 @@ public class PlayerInventory : NetworkBehaviour
 
             }
         }
+    }
+
+    [Client]
+    public void DropItem()
+    {
+        CmdDropItem();
+    }
+
+    [Command]
+    void CmdDropItem()
+    {
+        RpcDropItem();
+    }
+
+    [ClientRpc]
+    void RpcDropItem()
+    {
+
+        if (currentHoldItem.name == "Rock")
+        {
+            Debug.Log("Rock drop");
+            var rockObject = (GameObject)Instantiate(rock, holdItems.position, holdItems.rotation);
+            rockObject.name = "Rock";
+        }
+        else if (currentHoldItem.name == "Wood")
+        {
+            Instantiate(wood, holdItems);
+        }
+        else if (currentHoldItem.name == "Mushroom")
+        {
+            Instantiate(mushroom, holdItems);
+
+        }
+        items[currentSlot] = "";
+        currentHoldItem.gameObject.SetActive(false);
+        SetHoldItem(items[0]);
+
     }
 }

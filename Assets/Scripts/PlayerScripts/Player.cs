@@ -204,7 +204,7 @@ public class Player : NetworkBehaviour
     public bool inRangeFarm;
     public Farm farm;
     public BuildBoard buildBoard;
-    public PickUp pickup;
+    public GameObject pickup;
     public HeavyResource heavyResource;
     public bool inRangePlayer;
     public Player otherPlayer;
@@ -215,7 +215,7 @@ public class Player : NetworkBehaviour
             if (other.tag == "PickUp" || other.tag == "Grain")
             {
                 pickupInRange = true;
-                pickup = other.GetComponent<PickUp>();
+                pickup = other.gameObject;
             }
             else if(other.tag == "HeavyResource")
             {
@@ -280,9 +280,9 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     void RpcTradeAccepted()
     {
-        tempSlot = pickup;
+        //tempSlot = pickup;
         pickup = otherPlayer.pickup;
-        otherPlayer.pickup = tempSlot;
+        //otherPlayer.pickup = tempSlot;
         pendingTradeOffer = true;
     }
 

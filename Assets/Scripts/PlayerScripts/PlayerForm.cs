@@ -10,6 +10,11 @@ public class PlayerForm : NetworkBehaviour
     public GameObject pickaxe;
     public GameObject bag;
 
+    private void Start()
+    {
+        tool = axe;
+    }
+
     [Client]
     public void Woodcutter()
     {

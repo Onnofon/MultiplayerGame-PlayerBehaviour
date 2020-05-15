@@ -26,13 +26,13 @@ public class PlayerCanvas : MonoBehaviour
         for (int i = 0; i < player.playerActions.playerInv.items.Count; i++)
         {
             
-            if(player.playerActions.playerInv.items[i] == null)
+            if(player.playerActions.playerInv.items[i] == "")
             {
                 inventorySlots[i].text = "empty";
             }
             else
             {
-                inventorySlots[i].text = player.playerActions.playerInv.items[i].name;
+                inventorySlots[i].text = player.playerActions.playerInv.items[i];
             }
         }
     }

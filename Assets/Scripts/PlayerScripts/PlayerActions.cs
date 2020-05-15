@@ -14,8 +14,6 @@ public class PlayerActions : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerForm.Woodcutter();
-        playerInv.SetHoldItem(playerForm.tool.name);
     }
 
     // Update is called once per frame
@@ -66,7 +64,8 @@ public class PlayerActions : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(0) && player.pickupInRange)
         {
-            playerInv.AddToIventory(player.pickup.gameObject);
+            playerInv.AddToIventory(player.pickup.name);
+            DeletePickup();
         }
 
         if (Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
@@ -93,24 +92,34 @@ public class PlayerActions : NetworkBehaviour
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            playerInv.SetHoldItem(playerForm.tool.name);
+            playerInv.SetHoldItem(playerInv.items[0]);
+            playerInv.currentSlot = 0;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            playerInv.SetHoldItem(playerInv.items[1].name);
+            playerInv.SetHoldItem(playerInv.items[1]);
+            playerInv.currentSlot = 1;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-
+            playerInv.SetHoldItem(playerInv.items[2]);
+            playerInv.currentSlot = 2;
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-
+            playerInv.SetHoldItem(playerInv.items[3]);
+            playerInv.currentSlot = 3;
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-
+            playerInv.SetHoldItem(playerInv.items[4]);
+            playerInv.currentSlot = 4;
         }
+        if (Input.GetKeyDown(KeyCode.E) && playerInv.currentSlot > 0)
+        {
+            playerInv.DropItem();
+        }
+
     }
 
     [Client]
@@ -201,8 +210,8 @@ public class PlayerActions : NetworkBehaviour
     {
         if (player.pickup != null)
         {
-            player.pickup.player = player;
-            player.pickup.Deactivate();
+            //player.pickup.player = player;
+            //player.pickup.Deactivate();
             //player.triggerCol.enabled = false;
         }
     }
@@ -223,10 +232,28 @@ public class PlayerActions : NetworkBehaviour
     {
         if (player.pickup != null)
         {
-            player.pickup.Activate();
+            //player.pickup.Activate();
             player.pickup = null;
             player.triggerCol.enabled = true;
         }
 
+    }
+
+    [Client]
+    void DeletePickup()
+    {
+        CmdDeletePickUp();
+    }
+
+    [Command]
+    void CmdDeletePickUp()
+    {
+        RpcDeletePickup();
+    }
+    [ClientRpc]
+    void RpcDeletePickup()
+    {
+        player.pickup.SetActive(false);
+        player.pickup = null;
     }
 }
