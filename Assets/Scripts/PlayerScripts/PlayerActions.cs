@@ -10,6 +10,7 @@ public class PlayerActions : NetworkBehaviour
     public PlayerInventory playerInv;
     public PlayerForm playerForm;
     public bool pickedUp;
+    public bool isPulling;
     public int votes = 1;
     // Start is called before the first frame update
     void Start()
@@ -88,6 +89,15 @@ public class PlayerActions : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.T) && player.inRangePlayer)
         {
             Trade();
+        }
+
+        if(Input.GetKey(KeyCode.P))
+        {
+            isPulling = true;
+        }
+        else
+        {
+            isPulling = false;
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
