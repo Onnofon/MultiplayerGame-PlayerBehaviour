@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     private const string PLAYER_ID_PREFIX = "Player ";
     public static string customName = ""; //remembers changed name locally
-    public static int waitTime = 0; //have to use a timer to differentiate the time when the name change is called or the server doesn't set them properly
+    public static int waitTime = 2; //have to use a timer to differentiate the time when the name change is called or the server doesn't set them properly
     public static Dictionary<string, Player> players = new Dictionary<string, Player>();
     public static void RegisterPlayer(string _netID, Player _player)
     {

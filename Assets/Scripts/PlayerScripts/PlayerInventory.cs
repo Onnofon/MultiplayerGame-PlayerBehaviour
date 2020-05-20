@@ -8,6 +8,7 @@ public class PlayerInventory : NetworkBehaviour
     public List<string> items = new List<string>();
     public PlayerForm playerForm;
     public Transform holdItems;
+    public Transform itemDrop;
     public GameObject currentHoldItem;
     public int currentSlot;
     public GameObject rock;
@@ -89,16 +90,18 @@ public class PlayerInventory : NetworkBehaviour
         if (currentHoldItem.name == "Rock")
         {
             Debug.Log("Rock drop");
-            var rockObject = (GameObject)Instantiate(rock, holdItems.position, holdItems.rotation);
+            var rockObject = (GameObject)Instantiate(rock, itemDrop.position, itemDrop.rotation);
             rockObject.name = "Rock";
         }
         else if (currentHoldItem.name == "Wood")
         {
-            Instantiate(wood, holdItems);
+            var woodObject = (GameObject)Instantiate(wood, itemDrop.position, itemDrop.rotation);
+            woodObject.name = "Wood";
         }
         else if (currentHoldItem.name == "Mushroom")
         {
-            Instantiate(mushroom, holdItems);
+            var mushroomObject = (GameObject)Instantiate(mushroom, itemDrop.position, itemDrop.rotation);
+            mushroomObject.name = "Mushroom";
 
         }
         items[currentSlot] = "";

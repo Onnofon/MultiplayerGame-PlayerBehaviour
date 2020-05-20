@@ -35,6 +35,9 @@ public class PlayerCanvas : MonoBehaviour
                 inventorySlots[i].text = player.playerActions.playerInv.items[i];
             }
         }
+
+        text.text = player.gameObject.name;
+        text.gameObject.SetActive(true);
     }
 
     public void CurrentEmotion(string emotion)

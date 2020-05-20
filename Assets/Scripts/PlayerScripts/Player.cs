@@ -18,7 +18,7 @@ public class Player : NetworkBehaviour
     public PlayerActions playerActions;
     public CapsuleCollider triggerCol;
     public bool pendingTradeOffer;
-
+    public Mesh mesh;
     //Checking players current health
     [SyncVar]
     public int currentHealth;
@@ -45,11 +45,32 @@ public class Player : NetworkBehaviour
             canvas.transform.position = new Vector3(0, 0, 0);
             //canvas.GetComponent<UIforHealthSpeedAmmo>().thisPlayer = player;
             canvas.GetComponent<PlayerCanvas>().player = this.player;
+            StartCoroutine(waitChangeName());
 
         }
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    IEnumerator waitChangeName()
+    {
+        yield return new WaitForSeconds(GameManager.waitTime); //waits for seconds x player number
+        CmdChangeName(GameManager.customName); //calls the name change method on the server with the name from the player lobby
+    }
+
+    [Command]
+    void CmdChangeName(string newName) //tells server to call the RpcChangeName for all clients
+    {
+        RpcChangeName(newName);
+    }
+
+    [ClientRpc]
+    void RpcChangeName(string newName)
+    {
+        Player keepPlayer = GameManager.players[this.name]; //remembers the current player
+        GameManager.players.Remove(this.name); //removes the key + value
+        GameManager.players.Add(newName, keepPlayer); //adds the remembered player with a new key
+        this.name = newName; //updates the object name with the new name
     }
 
     [SerializeField]
@@ -200,10 +221,10 @@ public class Player : NetworkBehaviour
     }
 
     public bool pickupInRange;
-    public bool inRangeBuildingBoard;
+    public bool inRangeBuildingSign;
     public bool inRangeFarm;
     public Farm farm;
-    public BuildBoard buildBoard;
+    public BuildSign buildSign;
     public GameObject pickup;
     public HeavyResource heavyResource;
     public bool inRangePlayer;
@@ -212,7 +233,7 @@ public class Player : NetworkBehaviour
     {
         if (!playerActions.pickedUp)
         {
-            if (other.tag == "PickUp" || other.tag == "Grain")
+            if (other.tag == "Wood" || other.tag == "Rock")
             {
                 pickupInRange = true;
                 pickup = other.gameObject;
@@ -224,10 +245,10 @@ public class Player : NetworkBehaviour
             }
         }
 
-        if(other.tag == "BuildingBoard")
+        if(other.tag == "BuildingSign")
         {
-            inRangeBuildingBoard = true;
-            buildBoard = other.gameObject.GetComponent<BuildBoard>();
+            inRangeBuildingSign = true;
+            buildSign = other.gameObject.GetComponent<BuildSign>();
         }
 
         if (other.tag == "Farm")
@@ -246,14 +267,14 @@ public class Player : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PickUp")
+        if (other.tag == "Wood" || other.tag == "Rock")
         {
             pickupInRange = false;
         }
 
-        if (other.tag == "BuildingBoard")
+        if (other.tag == "BuildSign")
         {
-            inRangeBuildingBoard = false;
+            inRangeBuildingSign = false;
         }
 
         if (other.tag == "Player")
@@ -286,7 +307,6 @@ public class Player : NetworkBehaviour
         pendingTradeOffer = true;
     }
 
-    private bool inRangeBuildingSign;
     public void DisplayCost(int[] costs)
     {
         canvas.DisplayCost(costs[0].ToString(),costs[1].ToString());

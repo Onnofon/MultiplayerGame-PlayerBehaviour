@@ -69,17 +69,17 @@ public class PlayerActions : NetworkBehaviour
             DeletePickup();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
-        {
-            NextBuilding();
-        }
+        //if (Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
+        //{
+        //    NextBuilding();
+        //}
         //if (Input.GetKeyDown(KeyCode.Q) && player.inRangeBuildingBoard)
         //{
         //    player.buildBoard.Previous();
         //}
-        if (Input.GetKeyDown(KeyCode.F) && player.inRangeBuildingBoard)
+        if (Input.GetKeyDown(KeyCode.F) && player.inRangeBuildingSign)
         {
-            Vote();
+            Build();
         }
         else if(Input.GetKeyDown(KeyCode.F) && player.inRangeFarm)
         {
@@ -132,38 +132,38 @@ public class PlayerActions : NetworkBehaviour
 
     }
 
+    //[Client]
+    //void NextBuilding()
+    //{
+    //    CmdNextBuilding();
+    //}
+
+    //[Command]
+    //void CmdNextBuilding()
+    //{
+    //    RpcNextBuilding();
+    //}
+    //[ClientRpc]
+    //void RpcNextBuilding()
+    //{
+    //    player.buildBoard.Next();
+    //}
+
     [Client]
-    void NextBuilding()
+    void Build()
     {
-        CmdNextBuilding();
+        CmdBuild();
     }
 
     [Command]
-    void CmdNextBuilding()
+    void CmdBuild()
     {
-        RpcNextBuilding();
+        RpcBuild();
     }
     [ClientRpc]
-    void RpcNextBuilding()
+    void RpcBuild()
     {
-        player.buildBoard.Next();
-    }
-
-    [Client]
-    void Vote()
-    {
-        CmdVote();
-    }
-
-    [Command]
-    void CmdVote()
-    {
-        RpcVote();
-    }
-    [ClientRpc]
-    void RpcVote()
-    {
-        player.buildBoard.ConstructBuilding();
+        player.buildSign.ConstructBuilding();
     }
 
     [Client]

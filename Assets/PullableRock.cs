@@ -21,7 +21,7 @@ public class PullableRock : NetworkBehaviour
                 }
                 else
                 {
-                    Pulled();
+                    rockParent.transform.position -= new Vector3(0, 0, 0.004f);
                 }
             }
         }
@@ -61,8 +61,7 @@ public class PullableRock : NetworkBehaviour
 
     [ClientRpc]
     private void RpcPulled()
-    {
-       
-        rockParent.transform.position -= new Vector3(0, 0, 0.004f);
+    {       
+        //rockParent.transform.position -= new Vector3(0, 0, 0.004f);
     }
 }

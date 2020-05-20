@@ -7,11 +7,7 @@ public class Building : NetworkBehaviour
 {
     public int woodCost;
     public int stoneCost;
-    public GameObject building;
-    private Island island;
+    public MeshCollider col;
+    public MeshRenderer mesh;
 
-    private void Start()
-    {
-        island = this.transform.root.GetComponent<Island>();
-    }
 }
