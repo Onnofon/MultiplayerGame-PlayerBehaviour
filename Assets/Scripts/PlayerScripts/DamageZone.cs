@@ -8,7 +8,7 @@ public class DamageZone : Player {
     {
         if (col.gameObject.tag == "DamageZone")
         {
-            Die();
+            //Die();
 
         }
         

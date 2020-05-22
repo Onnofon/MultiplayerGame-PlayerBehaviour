@@ -18,7 +18,7 @@ public class Player : NetworkBehaviour
     public PlayerActions playerActions;
     public CapsuleCollider triggerCol;
     public bool pendingTradeOffer;
-    public Mesh mesh;
+    public PlayerAnimator playerAnim;
     //Checking players current health
     [SyncVar]
     public int currentHealth;
@@ -122,16 +122,16 @@ public class Player : NetworkBehaviour
 
         if (transform.position.y < thresholdLow)
         {
-            Die();
+            //Die();
         }
 
         if (transform.position.y > thresholdTop)
         {
-            Die();
+            //Die();
 
         }
 
-        if(!pickupInRange)
+        if (!pickupInRange)
         {
             pickup = null;
         }
@@ -149,13 +149,8 @@ public class Player : NetworkBehaviour
             //killFeed.showKill(otherPlayer, gameObject.name);
             this.gameObject.GetComponent<characterController>().deaths++;
             GameManager.GetPlayer(otherPlayer).GetComponent<characterController>().kills++;
-            Die();
+            //Die();
         }
-    }
-
-    public void Die()
-    {
-
     }
 
     [Client]
@@ -211,7 +206,7 @@ public class Player : NetworkBehaviour
 
                 for (float i = 5; i >= 0; i -= Time.deltaTime)
                 {
-                    if(i <= 0)
+                    if (i <= 0)
                     {
                         img.color = new Color(1, 1, 1, 0);
                     }
@@ -233,19 +228,19 @@ public class Player : NetworkBehaviour
     {
         if (!playerActions.pickedUp)
         {
-            if (other.tag == "Wood" || other.tag == "Rock")
+            if (other.tag == "PickUp")
             {
                 pickupInRange = true;
                 pickup = other.gameObject;
             }
-            else if(other.tag == "HeavyResource")
+            else if (other.tag == "HeavyResource")
             {
                 pickupInRange = true;
                 heavyResource = other.GetComponent<HeavyResource>();
             }
         }
 
-        if(other.tag == "BuildingSign")
+        if (other.tag == "BuildingSign")
         {
             inRangeBuildingSign = true;
             buildSign = other.gameObject.GetComponent<BuildSign>();
@@ -257,17 +252,17 @@ public class Player : NetworkBehaviour
             farm = other.gameObject.GetComponent<Farm>();
         }
 
-        if(other.tag == "Player" && playerActions.pickedUp)
+        if (other.tag == "Player")
         {
             inRangePlayer = true;
             otherPlayer = other.gameObject.GetComponent<Player>();
-            canvas.TradeOption(pickup.name);
+            canvas.TradeOption(playerActions.playerInv.items[playerActions.playerInv.currentSlot]);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Wood" || other.tag == "Rock")
+        if (other.tag == "PickUp")
         {
             pickupInRange = false;
         }
@@ -286,25 +281,24 @@ public class Player : NetworkBehaviour
 
     }
 
-    private PickUp tempSlot;
+    private string tempSlot;
     [Client]
-    public void TradeAccepted()
+    public void TradeAccepted(string theirOffer)
     {
-        CmdTradeAccepted();
+        CmdTradeAccepted(theirOffer);
     }
 
     [Command]
-    void CmdTradeAccepted()
+    void CmdTradeAccepted(string theirOffer)
     {
-        RpcTradeAccepted();
+        RpcTradeAccepted(theirOffer);
     }
     [ClientRpc]
-    void RpcTradeAccepted()
+    void RpcTradeAccepted(string theirOffer)
     {
-        //tempSlot = pickup;
-        pickup = otherPlayer.pickup;
-        //otherPlayer.pickup = tempSlot;
-        pendingTradeOffer = true;
+        tempSlot = playerActions.playerInv.items[playerActions.playerInv.currentSlot];
+        playerActions.playerInv.items[playerActions.playerInv.currentSlot] = theirOffer;
+        pendingTradeOffer = false;
     }
 
     public void DisplayCost(int[] costs)
@@ -332,8 +326,25 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void RpcTradeRequest(string theirOffer)
     {
+        canvas.theirOffer = theirOffer;
+        canvas.incomingTrade = true;
         pendingTradeOffer = true;
-        
-        canvas.TradeRequest(theirOffer, pickup.ToString());
     }
+
+    //[Client]
+    //public void PlayAnimation(string anim)
+    //{
+    //    CmdPlayAnimation(anim);
+    //}
+
+    //[Command]
+    //public void CmdPlayAnimation(string anim)
+    //{
+    //    RpcPlayAnimation(anim);
+    //}
+    //[ClientRpc]
+    //public void RpcPlayAnimation(string anim)
+    //{
+    //    playerAnim.PlayAnimation(anim);
+    //}
 }

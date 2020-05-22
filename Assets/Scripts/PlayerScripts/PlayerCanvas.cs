@@ -14,6 +14,8 @@ public class PlayerCanvas : MonoBehaviour
     public Image hungerBar;
     public GameObject tradePanel;
     public List<TextMeshProUGUI> inventorySlots = new List<TextMeshProUGUI>();
+    public bool incomingTrade;
+    public string theirOffer;
     void Start()
     {
         
@@ -25,8 +27,8 @@ public class PlayerCanvas : MonoBehaviour
         hungerBar.fillAmount = (float)player.currentHunger / (float)player.maxHunger;
         for (int i = 0; i < player.playerActions.playerInv.items.Count; i++)
         {
-            
-            if(player.playerActions.playerInv.items[i] == "")
+
+            if (player.playerActions.playerInv.items[i] == "")
             {
                 inventorySlots[i].text = "empty";
             }
@@ -36,8 +38,17 @@ public class PlayerCanvas : MonoBehaviour
             }
         }
 
-        text.text = player.gameObject.name;
-        text.gameObject.SetActive(true);
+        if(incomingTrade)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            tradePanel.SetActive(true);
+            tradeText.text = "The other player offers: " + theirOffer + " for your: " + player.playerActions.playerInv.items[player.playerActions.playerInv.currentSlot];
+        }
+        else
+        {
+            tradePanel.SetActive(false);
+        }
     }
 
     public void CurrentEmotion(string emotion)
@@ -58,30 +69,29 @@ public class PlayerCanvas : MonoBehaviour
 
     public void TradeOption(string currentItem)
     {
-        text.text = "Press F to request a trade for your: " + currentItem;
+        text.text = "Press T to request a trade for your: " + currentItem;
         text.gameObject.SetActive(true);
     }
 
-    public void TradeRequest(string theirOffer, string playerItem)
-    {
-        tradePanel.SetActive(true);
-        tradeText.text = "The other player offers: " + theirOffer +  " for your: " + player.pickup.name;
-    }
+    //public void TradeRequest()
+    //{
+    //    tradePanel.SetActive(true);
+    //    tradeText.text = "The other player offers: " + theirOffer +  " for your: " + player.pickup.name;
+    //}
 
     public void Decline()
     {
-        tradePanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        incomingTrade = false;
         player.pendingTradeOffer = false;
     }
 
     public void Accept()
     {
-        tradePanel.SetActive(false);
-        player.TradeAccepted();
-    }
-
-    public void Inventory()
-    {
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        incomingTrade = false;
+        player.TradeAccepted(theirOffer);
     }
 }

@@ -22,6 +22,8 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!rb.IsSleeping() && onGround)
+            player.playerAnim.PlayAnimation("move");
         float translation = Input.GetAxis("Vertical") * speed;
         float straffe = Input.GetAxis("Horizontal") * speed;
         translation *= Time.deltaTime;
@@ -36,6 +38,7 @@ public class PlayerMovement : NetworkBehaviour
             {
                 rb.velocity = new Vector3(0f, jumpTakeOffSpeed, 0f);
                 onGround = false;
+                player.playerAnim.PlayAnimation("jump");
                 player.currentHunger -= 1;
             }
         }

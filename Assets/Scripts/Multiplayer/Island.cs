@@ -52,10 +52,4 @@ public class Island : NetworkBehaviour
             }
         }
     }
-
-    private void Update()
-    {
-        woodUI.text = "Wood: " + totalWood.ToString();
-        stoneUI.text = "Stone: " + totalStone.ToString();
-    }
 }

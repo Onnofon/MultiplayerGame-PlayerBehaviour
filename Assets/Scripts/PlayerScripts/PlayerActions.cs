@@ -182,7 +182,7 @@ public class PlayerActions : NetworkBehaviour
     {
         if (!player.otherPlayer.pendingTradeOffer)
         {
-            player.otherPlayer.TradeRequest(player.pickup.name);
+            player.otherPlayer.TradeRequest(playerInv.items[playerInv.currentSlot]);
         }
     }
 

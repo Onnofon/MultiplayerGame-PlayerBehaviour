@@ -70,13 +70,13 @@ public class BuildSign : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Stone")
+        if (other.name == "Rock")
         {
             currentStone++;
             if(building.stoneCost > 0)
                 resources.Add(other.gameObject);
         }
-        if (other.tag == "Wood")
+        if (other.name == "Wood")
         {
             currentWood++;
             if (building.woodCost > 0)
@@ -85,7 +85,7 @@ public class BuildSign : NetworkBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Stone")
+        if (other.name == "Rock")
         {
             currentStone--;
             if(resources.Contains(other.gameObject))
@@ -93,7 +93,7 @@ public class BuildSign : NetworkBehaviour
                 resources.Remove(other.gameObject);
             }
         }
-        if (other.tag == "Wood")
+        if (other.name == "Wood")
         {
             currentWood--;
             if (resources.Contains(other.gameObject))

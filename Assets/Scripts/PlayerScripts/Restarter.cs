@@ -12,12 +12,12 @@ public class Restarter : Player
     {
         if (transform.position.y < thresholdlow)
         {
-            Die();
+            //Die();
         }
 
         if (transform.position.y < thresholdtop)
         {
-            Die();
+            //Die();
         }
     }
 }
