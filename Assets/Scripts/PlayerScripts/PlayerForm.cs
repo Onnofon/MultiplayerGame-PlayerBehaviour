@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class PlayerForm : NetworkBehaviour
 {
     public GameObject tool;
+    public BoxCollider toolCol;
     public GameObject axe;
     public GameObject pickaxe;
     public GameObject bag;
@@ -13,6 +14,9 @@ public class PlayerForm : NetworkBehaviour
     private void Start()
     {
         tool = axe;
+        pickaxe.gameObject.SetActive(false);
+        bag.gameObject.SetActive(false);
+        Woodcutter();
     }
 
     [Client]
@@ -35,6 +39,7 @@ public class PlayerForm : NetworkBehaviour
         //pickaxe.gameObject.SetActive(false);
         //bag.gameObject.SetActive(false);
         tool = axe;
+        toolCol = tool.gameObject.GetComponent<BoxCollider>();
     }
 
     [Client]
@@ -53,10 +58,11 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcMiner()
     {
-        axe.gameObject.SetActive(false);
-        pickaxe.gameObject.SetActive(true);
-        bag.gameObject.SetActive(false);
+        //axe.gameObject.SetActive(false);
+        //pickaxe.gameObject.SetActive(true);
+        //bag.gameObject.SetActive(false);
         tool = pickaxe;
+        toolCol = tool.gameObject.GetComponent<BoxCollider>();
     }
 
     [Client]
@@ -75,10 +81,11 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcGatherer()
     {
-        axe.gameObject.SetActive(false);
-        pickaxe.gameObject.SetActive(false);
-        bag.gameObject.SetActive(true);
+        //axe.gameObject.SetActive(false);
+        //pickaxe.gameObject.SetActive(false);
+        //bag.gameObject.SetActive(true);
         tool = bag;
+        toolCol = tool.gameObject.GetComponent<BoxCollider>();
     }
 
     [Client]
@@ -97,9 +104,9 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcNoForm()
     {
-        axe.gameObject.SetActive(false);
-        pickaxe.gameObject.SetActive(false);
-        bag.gameObject.SetActive(false);
+        //axe.gameObject.SetActive(false);
+        //pickaxe.gameObject.SetActive(false);
+        //bag.gameObject.SetActive(false);
         tool = null;
     }
 }

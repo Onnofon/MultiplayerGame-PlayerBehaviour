@@ -12,6 +12,8 @@ TagManager:
   - Rock
   - BuildingSign
   - Mushroom
+  - TradingBoard
+  - Tree
   layers:
   - Default
   - TransparentFX

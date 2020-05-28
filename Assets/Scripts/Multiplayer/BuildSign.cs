@@ -10,8 +10,8 @@ public class BuildSign : NetworkBehaviour
     public TextMeshProUGUI stoneUI;
     public TextMeshProUGUI buildingName;
     public Building building;
-    private int currentStone;
-    private int currentWood;
+    public int currentStone;
+    public int currentWood;
     public List<GameObject> resources = new List<GameObject>();
 
 
@@ -66,40 +66,5 @@ public class BuildSign : NetworkBehaviour
         }
 
         
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.name == "Rock")
-        {
-            currentStone++;
-            if(building.stoneCost > 0)
-                resources.Add(other.gameObject);
-        }
-        if (other.name == "Wood")
-        {
-            currentWood++;
-            if (building.woodCost > 0)
-                resources.Add(other.gameObject);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.name == "Rock")
-        {
-            currentStone--;
-            if(resources.Contains(other.gameObject))
-            {
-                resources.Remove(other.gameObject);
-            }
-        }
-        if (other.name == "Wood")
-        {
-            currentWood--;
-            if (resources.Contains(other.gameObject))
-            {
-                resources.Remove(other.gameObject);
-            }
-        }
     }
 }

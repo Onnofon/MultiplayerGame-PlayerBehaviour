@@ -217,46 +217,80 @@ public class Player : NetworkBehaviour
 
     public bool pickupInRange;
     public bool inRangeBuildingSign;
+    public bool inRangeTradeSign;
     public bool inRangeFarm;
     public Farm farm;
     public BuildSign buildSign;
+    public TradingBoard tradingBoard;
     public GameObject pickup;
     public HeavyResource heavyResource;
     public bool inRangePlayer;
     public Player otherPlayer;
-    private void OnTriggerEnter(Collider other)
+
+    [System.Obsolete]
+    private void OnCollisionEnter(Collision col)
     {
         if (!playerActions.pickedUp)
         {
-            if (other.tag == "PickUp")
+            if (col.other.tag == "PickUp")
             {
                 pickupInRange = true;
-                pickup = other.gameObject;
-            }
-            else if (other.tag == "HeavyResource")
-            {
-                pickupInRange = true;
-                heavyResource = other.GetComponent<HeavyResource>();
+                pickup = col.other.gameObject;
             }
         }
 
-        if (other.tag == "BuildingSign")
+        if (col.other.tag == "BuildingSign")
         {
             inRangeBuildingSign = true;
-            buildSign = other.gameObject.GetComponent<BuildSign>();
+            if(buildSign == null)
+            buildSign = col.other.gameObject.GetComponent<BuildSign>();
         }
 
-        if (other.tag == "Farm")
+        //if (col.other.tag == "TradingBoard")
+        //{
+        //    inRangeTradeSign = true;
+        //    if(tradingBoard == null)
+        //    tradingBoard = col.other.gameObject.GetComponent<TradingBoard>();
+        //}
+
+        if (col.other.tag == "Farm")
         {
             inRangeFarm = true;
-            farm = other.gameObject.GetComponent<Farm>();
+            if(farm == null)
+            farm = col.other.gameObject.GetComponent<Farm>();
         }
 
-        if (other.tag == "Player")
+        if (col.other.tag == "Player")
         {
             inRangePlayer = true;
-            otherPlayer = other.gameObject.GetComponent<Player>();
-            canvas.TradeOption(playerActions.playerInv.items[playerActions.playerInv.currentSlot]);
+            otherPlayer = col.other.gameObject.GetComponent<Player>();
+            //canvas.TradeOption(playerActions.playerInv.items[playerActions.playerInv.currentSlot]);
+        }
+    }
+
+    [System.Obsolete]
+    private void OnCollisionExit(Collision col)
+    {
+        if (col.other.tag == "PickUp")
+        {
+            pickupInRange = false;
+        }
+
+        if (col.other.tag == "BuildSign")
+        {
+            inRangeBuildingSign = false;
+        }
+
+        //if (col.other.tag == "TradingBoard")
+        //{
+        //    inRangeTradeSign = false;
+        //}
+
+        if (col.other.tag == "Player")
+        {
+            inRangePlayer = false;
+            otherPlayer = null;
+            canvas.text.gameObject.SetActive(false);
         }
     }
 

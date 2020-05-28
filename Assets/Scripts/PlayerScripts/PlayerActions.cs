@@ -10,11 +10,12 @@ public class PlayerActions : NetworkBehaviour
     public PlayerInventory playerInv;
     public PlayerForm playerForm;
     public bool pickedUp;
+    public bool toolOffCd;
     public bool isPulling;
-    public int votes = 1;
     // Start is called before the first frame update
     void Start()
     {
+        toolOffCd = true;
     }
 
     // Update is called once per frame
@@ -68,6 +69,10 @@ public class PlayerActions : NetworkBehaviour
             playerInv.AddToIventory(player.pickup.name);
             DeletePickup();
         }
+        else if (Input.GetMouseButtonDown(0) && !player.pickupInRange && toolOffCd)
+        {
+            UseTool();
+        }
 
         //if (Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
         //{
@@ -81,23 +86,28 @@ public class PlayerActions : NetworkBehaviour
         {
             Build();
         }
-        else if(Input.GetKeyDown(KeyCode.F) && player.inRangeFarm)
+        else if(Input.GetKeyDown(KeyCode.F) && player.inRangeTradeSign)
         {
-            PlantGrain();
+            Trade(true);
         }
 
-        if (Input.GetKeyDown(KeyCode.T) && player.inRangePlayer)
+        if (Input.GetKeyDown(KeyCode.G) && player.inRangeTradeSign)
         {
-            Trade();
+            Trade(false);
         }
 
-        if(Input.GetKey(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.H) && player.inRangeTradeSign)
         {
-            isPulling = true;
+            Withdraw();
+        }
+
+        if (Input.GetKey(KeyCode.P))
+        {
+            Pull(true);
         }
         else
         {
-            isPulling = false;
+            Pull(false);
         }
 
         if(Input.GetKeyDown(KeyCode.Alpha1))
@@ -148,6 +158,35 @@ public class PlayerActions : NetworkBehaviour
     //{
     //    player.buildBoard.Next();
     //}
+    [Client]
+    void UseTool()
+    {
+        CmdUseTool();
+    }
+
+    [Command]
+    void CmdUseTool()
+    {
+        RpcUseTool();
+    }
+    [ClientRpc]
+    void RpcUseTool()
+    {
+        toolOffCd = false;
+        playerMov.usingTool = true;
+        StartCoroutine(ToolSwing());
+    }
+
+    IEnumerator ToolSwing()
+    {
+        player.playerAnim.PlayAnimation("use");
+        playerForm.toolCol.enabled = true;
+        yield return new WaitForSeconds(2f);
+        playerForm.toolCol.enabled = false;
+        playerMov.usingTool = false;
+        toolOffCd = true;
+
+    }
 
     [Client]
     void Build()
@@ -167,23 +206,37 @@ public class PlayerActions : NetworkBehaviour
     }
 
     [Client]
-    void Trade()
+    void Trade(bool accept)
     {
-        CmdTrade();
+        CmdTrade(accept);
     }
 
     [Command]
-    void CmdTrade()
+    void CmdTrade(bool accept)
     {
-        RpcTrade();
+        RpcTrade(accept);
     }
     [ClientRpc]
-    void RpcTrade()
+    void RpcTrade(bool accept)
     {
-        if (!player.otherPlayer.pendingTradeOffer)
-        {
-            player.otherPlayer.TradeRequest(playerInv.items[playerInv.currentSlot]);
-        }
+        player.tradingBoard.UpdateBoardInfo(accept);
+    }
+
+    [Client]
+    void Withdraw()
+    {
+        CmdWithdraw();
+    }
+
+    [Command]
+    void CmdWithdraw()
+    {
+        RpcWithdraw();
+    }
+    [ClientRpc]
+    void RpcWithdraw()
+    {
+        player.tradingBoard.Withdraw();
     }
 
     [Client]
@@ -248,6 +301,27 @@ public class PlayerActions : NetworkBehaviour
         }
 
     }
+
+    [Client]
+    void Pull(bool pulling)
+    {
+        CmdPull(pulling);
+    }
+
+    [Command]
+    void CmdPull(bool pulling)
+    {
+        RpcPull(pulling);
+    }
+    [ClientRpc]
+    void RpcPull(bool pulling)
+    {
+        if (pulling)
+            isPulling = true;
+        else
+            isPulling = false;
+    }
+
 
     [Client]
     void DeletePickup()

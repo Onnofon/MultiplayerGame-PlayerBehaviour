@@ -7,6 +7,7 @@ public class PlayerMovement : NetworkBehaviour
 {
     public Player player;
     public bool onGround;
+    public bool usingTool;
     public Rigidbody rb;
     public float speed;
     public float normalSpeed = 7.0f;
@@ -22,7 +23,7 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!rb.IsSleeping() && onGround)
+        if(!rb.IsSleeping() && onGround && !usingTool)
             player.playerAnim.PlayAnimation("move");
         float translation = Input.GetAxis("Vertical") * speed;
         float straffe = Input.GetAxis("Horizontal") * speed;

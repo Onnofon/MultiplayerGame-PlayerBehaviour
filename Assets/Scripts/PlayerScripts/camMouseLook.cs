@@ -10,7 +10,7 @@ public class camMouseLook : MonoBehaviour
     public float sensitivity;
     public float smoothing = 2.0f;
     GameObject character;
-
+    public Player player;
     
     void Start()
     {
@@ -30,6 +30,11 @@ public class camMouseLook : MonoBehaviour
             sensitivity -= 1;
         }
 
+        //if (Input.GetAxis("Mouse X") < 0 || Input.GetAxis("Mouse X") > 0 || Input.GetAxis("Mouse Y") < 0 || Input.GetAxis("Mouse Y") > 0)
+        //{
+        //    player.playerAnim.PlayAnimation("idle");         
+        //}
+        
         //Mouse direction X en y
         var md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         //Mouse direction influenced by smoothing en sensitivity
