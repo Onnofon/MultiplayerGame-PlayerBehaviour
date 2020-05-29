@@ -11,7 +11,9 @@ public class DestroyableObject : NetworkBehaviour
     public GameObject wood;
     public GameObject mushroom;
     public Transform spawnLoc;
-
+    public BuildSign building;
+    private bool canDamage = true;
+    private bool destroyable = true;
     //[Client]
     //public void TakeDamage(int damage)
     //{
@@ -26,37 +28,54 @@ public class DestroyableObject : NetworkBehaviour
     [ClientRpc]
     public void RpcTakeDamage(int damage)
     {
-        health -= damage;
-        if(health < 0)
+        if (canDamage)
         {
-            StartCoroutine(DropItems());
+            canDamage = false;
+            health -= damage;
+            if (health < 0)
+            {
+                StartCoroutine(DropItems());
+            }
+            canDamage = true;
         }
     }
 
     IEnumerator DropItems()
     {
-
-        for (int i = 0; i < itemDrops.Count; i++)
+        if (destroyable)
         {
-            if (itemDrops[i].name == "Rock")
+            destroyable = false;
+            for (int i = 0; i < itemDrops.Count; i++)
             {
-                var rockObject = (GameObject)Instantiate(rock, spawnLoc.position, spawnLoc.rotation);
-                rockObject.name = "Rock";
+                if (itemDrops[i].name == "Rock")
+                {
+                    var rockObject = (GameObject)Instantiate(rock, spawnLoc.position, spawnLoc.rotation);
+                    rockObject.name = "Rock";
+                }
+                else if (itemDrops[i].name == "Wood")
+                {
+                    var woodObject = (GameObject)Instantiate(wood, spawnLoc.position, spawnLoc.rotation);
+                    woodObject.name = "Wood";
+                }
+                else if (itemDrops[i].name == "Mushroom")
+                {
+                    var mushroomObject = (GameObject)Instantiate(mushroom, spawnLoc.position, spawnLoc.rotation);
+                    mushroomObject.name = "Mushroom";
+                }
+                yield return new WaitForSeconds(0.1f);
             }
-            else if (itemDrops[i].name == "Wood")
+            if (building != null)
             {
-                var woodObject = (GameObject)Instantiate(wood, spawnLoc.position, spawnLoc.rotation);
-                woodObject.name = "Wood";
+                yield return new WaitForSeconds(0.1f);
+                building.DeconstructBuilding();
+                destroyable = true;
             }
-            else if (itemDrops[i].name == "Mushroom")
+            else
             {
-                var mushroomObject = (GameObject)Instantiate(mushroom, spawnLoc.position, spawnLoc.rotation);
-                mushroomObject.name = "Mushroom";
+                yield return new WaitForSeconds(0.1f);
+                this.gameObject.SetActive(false);
+                destroyable = true;
             }
-            yield return new WaitForSeconds(0.1f);
         }
-
-        yield return new WaitForSeconds(0.1f);
-        this.gameObject.SetActive(false);
     }
 }

@@ -14,16 +14,16 @@ public class Tool : MonoBehaviour
 
         if (this.gameObject.name == "Pickaxe" && other.tag == "Boulder")
         {
-            other.gameObject.SendMessage("TakeDamage", toolDamage);
+            other.gameObject.SendMessage("RpcTakeDamage", toolDamage);
         }
 
         if (this.gameObject.name == "shovel" && other.tag == "DigSpot")
         {
-            other.gameObject.SendMessage("TakeDamage", toolDamage);
+            other.gameObject.SendMessage("RpcTakeDamage", toolDamage);
         }
         if (other.tag == "Building")
         {
-            other.gameObject.SendMessage("TakeDamage", toolDamage);
+            other.gameObject.SendMessage("RpcTakeDamage", toolDamage);
         }
     }
 }

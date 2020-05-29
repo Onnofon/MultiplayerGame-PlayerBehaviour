@@ -7,7 +7,7 @@ public class Building : NetworkBehaviour
 {
     public int woodCost;
     public int stoneCost;
-    public MeshCollider col;
-    public MeshRenderer mesh;
+    public List<MeshRenderer> meshComponents = new List<MeshRenderer>();
+    public List<Collider> colComponents = new List<Collider>();
 
 }

@@ -758,6 +758,9 @@ MonoBehaviour:
   inRangeBuildingSign: 0
   inRangeTradeSign: 0
   inRangeFarm: 0
+  inRangeWoodCutter: 0
+  inRangeMiner: 0
+  inRangeGatherer: 0
   farm: {fileID: 0}
   buildSign: {fileID: 0}
   tradingBoard: {fileID: 0}
@@ -784,6 +787,7 @@ MonoBehaviour:
   - {fileID: 4943901092699843098}
   - {fileID: -3308635428589690969}
   - {fileID: 4195414908823629949}
+  - {fileID: 7064521658039321738}
   remoteLayerName: RemotePlayer
 --- !u!114 &6557570725391090231
 MonoBehaviour:
@@ -836,6 +840,7 @@ MonoBehaviour:
   playerInv: {fileID: 4195414908823629949}
   playerForm: {fileID: 7064521658039321738}
   pickedUp: 0
+  toolOffCd: 0
   isPulling: 0
 --- !u!136 &2565981168422850607
 CapsuleCollider:
@@ -868,6 +873,7 @@ MonoBehaviour:
   axe: {fileID: 599109802725621215}
   pickaxe: {fileID: 6294110333293600142}
   bag: {fileID: 6101803732148715377}
+  playerInv: {fileID: 4195414908823629949}
 --- !u!114 &4195414908823629949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2116,7 +2122,7 @@ Transform:
   - {fileID: 6292318708902887672}
   - {fileID: 6099490513513170903}
   - {fileID: 8620929524691261828}
-  - {fileID: 3507639612501083808}
+  - {fileID: 3507639612501083810}
   - {fileID: 6076101677339105904}
   m_Father: {fileID: 1658881179233279061}
   m_RootOrder: 4
@@ -2653,7 +2659,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6294110333293600142}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.07000012, y: 0.3, z: 0.44000015}
@@ -2959,7 +2965,7 @@ PrefabInstance:
     - {fileID: -2980129025021885931, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
     - {fileID: 7743496861117866614, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
---- !u!4 &3507639612501083808 stripped
+--- !u!4 &3507639612501083810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4930266834957668942, guid: 48525ea3edaea564f8f8de0ef674056e,
     type: 3}

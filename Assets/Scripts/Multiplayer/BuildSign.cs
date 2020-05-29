@@ -13,7 +13,9 @@ public class BuildSign : NetworkBehaviour
     public int currentStone;
     public int currentWood;
     public List<GameObject> resources = new List<GameObject>();
-
+    public List<MeshRenderer> meshComponents = new List<MeshRenderer>();
+    public List<Collider> colComponents = new List<Collider>();
+    public GameObject canvas;
 
     private void Update()
     {
@@ -55,10 +57,25 @@ public class BuildSign : NetworkBehaviour
             {
                 Destroy(item);
             }
-            building.mesh.enabled = true;
-            building.col.enabled = true;
-            building.gameObject.transform.parent = null;
-            this.gameObject.SetActive(false);
+            foreach (MeshRenderer item in building.meshComponents)
+            {
+                item.enabled = true;
+            }
+            foreach (Collider item in building.colComponents)
+            {
+                item.enabled = true;
+            }
+
+            foreach (MeshRenderer item in meshComponents)
+            {
+                item.enabled = false;
+            }
+            foreach (Collider item in colComponents)
+            {
+                item.enabled = false;
+            }
+            canvas.gameObject.SetActive(false);
+
         }
         else
         {
@@ -66,5 +83,49 @@ public class BuildSign : NetworkBehaviour
         }
 
         
+    }
+
+    [Client]
+    public void DeconstructBuilding()
+    {
+        CmdDeconstructBuilding();
+    }
+
+    [Command]
+    private void CmdDeconstructBuilding()
+    {
+        RpcDeconstructBuilding();
+    }
+
+    [ClientRpc]
+    private void RpcDeconstructBuilding()
+    {
+        StartCoroutine(Deconstruct());
+    }
+
+    IEnumerator Deconstruct()
+    {
+        foreach (MeshRenderer item in building.meshComponents)
+        {
+            item.enabled = false;
+        }
+        foreach (Collider item in building.colComponents)
+        {
+            item.enabled = false;
+        }
+
+        foreach (MeshRenderer item in meshComponents)
+        {
+            item.enabled = true;
+        }
+        foreach (Collider item in colComponents)
+        {
+            item.enabled = true;
+        }
+        canvas.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+        currentStone = 0;
+        currentWood = 0;
     }
 }

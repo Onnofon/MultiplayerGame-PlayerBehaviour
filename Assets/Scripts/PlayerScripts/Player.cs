@@ -219,6 +219,9 @@ public class Player : NetworkBehaviour
     public bool inRangeBuildingSign;
     public bool inRangeTradeSign;
     public bool inRangeFarm;
+    public bool inRangeWoodCutter;
+    public bool inRangeMiner;
+    public bool inRangeGatherer;
     public Farm farm;
     public BuildSign buildSign;
     public TradingBoard tradingBoard;
@@ -280,39 +283,13 @@ public class Player : NetworkBehaviour
         {
             inRangeBuildingSign = false;
         }
-
-        //if (col.other.tag == "TradingBoard")
-        //{
-        //    inRangeTradeSign = false;
-        //}
-
+        
         if (col.other.tag == "Player")
         {
             inRangePlayer = false;
             otherPlayer = null;
             canvas.text.gameObject.SetActive(false);
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "PickUp")
-        {
-            pickupInRange = false;
-        }
-
-        if (other.tag == "BuildSign")
-        {
-            inRangeBuildingSign = false;
-        }
-
-        if (other.tag == "Player")
-        {
-            inRangePlayer = false;
-            otherPlayer = null;
-            canvas.text.gameObject.SetActive(false);
-        }
-
     }
 
     private string tempSlot;

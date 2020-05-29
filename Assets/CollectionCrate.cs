@@ -5,6 +5,8 @@ using UnityEngine;
 public class CollectionCrate : MonoBehaviour
 {
     public BuildSign buildingSign;
+    public Collider col;
+    public MeshRenderer mesh;
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Rock")

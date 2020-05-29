@@ -69,7 +69,7 @@ public class PlayerActions : NetworkBehaviour
             playerInv.AddToIventory(player.pickup.name);
             DeletePickup();
         }
-        else if (Input.GetMouseButtonDown(0) && !player.pickupInRange && toolOffCd)
+        else if (Input.GetMouseButtonDown(0) && !player.pickupInRange && toolOffCd && playerInv.currentSlot == 0)
         {
             UseTool();
         }
@@ -86,9 +86,13 @@ public class PlayerActions : NetworkBehaviour
         {
             Build();
         }
-        else if(Input.GetKeyDown(KeyCode.F) && player.inRangeTradeSign)
+        if (Input.GetKeyDown(KeyCode.F) && player.inRangeTradeSign)
         {
             Trade(true);
+        }
+        if(Input.GetKeyDown(KeyCode.F) && (player.inRangeGatherer || player.inRangeMiner || player.inRangeWoodCutter))
+        {
+            ChangeForm();
         }
 
         if (Input.GetKeyDown(KeyCode.G) && player.inRangeTradeSign)
@@ -135,7 +139,7 @@ public class PlayerActions : NetworkBehaviour
             playerInv.SetHoldItem(playerInv.items[4]);
             playerInv.currentSlot = 4;
         }
-        if (Input.GetKeyDown(KeyCode.E) && playerInv.currentSlot > 0)
+        if (Input.GetKeyDown(KeyCode.E) && playerInv.currentSlot > 0 && playerInv.currentHoldItem != null)
         {
             playerInv.DropItem();
         }
@@ -175,6 +179,34 @@ public class PlayerActions : NetworkBehaviour
         toolOffCd = false;
         playerMov.usingTool = true;
         StartCoroutine(ToolSwing());
+    }
+
+    [Client]
+    void ChangeForm()
+    {
+        CmdChangeForm();
+    }
+
+    [Command]
+    void CmdChangeForm()
+    {
+        RpcChangeForm();
+    }
+    [ClientRpc]
+    void RpcChangeForm()
+    {
+        if(player.inRangeWoodCutter)
+        {
+            playerForm.Woodcutter();
+        }
+        else if(player.inRangeGatherer)
+        {
+            playerForm.Gatherer();
+        }
+        else if(player.inRangeMiner)
+        {
+            playerForm.Miner();
+        }
     }
 
     IEnumerator ToolSwing()
@@ -338,6 +370,7 @@ public class PlayerActions : NetworkBehaviour
     void RpcDeletePickup()
     {
         player.pickup.SetActive(false);
+        player.pickupInRange = false;
         player.pickup = null;
     }
 }

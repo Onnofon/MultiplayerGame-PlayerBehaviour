@@ -10,13 +10,10 @@ public class PlayerForm : NetworkBehaviour
     public GameObject axe;
     public GameObject pickaxe;
     public GameObject bag;
+    public PlayerInventory playerInv;
 
     private void Start()
     {
-        tool = axe;
-        pickaxe.gameObject.SetActive(false);
-        bag.gameObject.SetActive(false);
-        Woodcutter();
     }
 
     [Client]
@@ -35,11 +32,14 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcWoodcutter()
     {
-        //axe.gameObject.SetActive(true);
-        //pickaxe.gameObject.SetActive(false);
-        //bag.gameObject.SetActive(false);
+        axe.gameObject.SetActive(true);
+        pickaxe.gameObject.SetActive(false);
+        bag.gameObject.SetActive(false);
         tool = axe;
+        playerInv.items[0] = tool.name;
         toolCol = tool.gameObject.GetComponent<BoxCollider>();
+        playerInv.SetHoldItem(playerInv.items[0]);
+        playerInv.currentSlot = 0;
     }
 
     [Client]
@@ -58,11 +58,14 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcMiner()
     {
-        //axe.gameObject.SetActive(false);
-        //pickaxe.gameObject.SetActive(true);
-        //bag.gameObject.SetActive(false);
+        axe.gameObject.SetActive(false);
+        pickaxe.gameObject.SetActive(true);
+        bag.gameObject.SetActive(false);
         tool = pickaxe;
+        playerInv.items[0] = tool.name;
         toolCol = tool.gameObject.GetComponent<BoxCollider>();
+        playerInv.SetHoldItem(playerInv.items[0]);
+        playerInv.currentSlot = 0;
     }
 
     [Client]
@@ -81,11 +84,14 @@ public class PlayerForm : NetworkBehaviour
     [ClientRpc]
     private void RpcGatherer()
     {
-        //axe.gameObject.SetActive(false);
-        //pickaxe.gameObject.SetActive(false);
-        //bag.gameObject.SetActive(true);
+        axe.gameObject.SetActive(false);
+        pickaxe.gameObject.SetActive(false);
+        bag.gameObject.SetActive(true);
         tool = bag;
+        playerInv.items[0] = tool.name;
         toolCol = tool.gameObject.GetComponent<BoxCollider>();
+        playerInv.SetHoldItem(playerInv.items[0]);
+        playerInv.currentSlot = 0;
     }
 
     [Client]

@@ -16,7 +16,7 @@ public class PlayerInventory : NetworkBehaviour
     public GameObject mushroom;
     private void Start()
     {
-        items[0] = playerForm.tool.name;
+        items[0] = "none";
     }
     public void AddToIventory(string item)
     {
@@ -107,6 +107,7 @@ public class PlayerInventory : NetworkBehaviour
         items[currentSlot] = "";
         currentHoldItem.gameObject.SetActive(false);
         SetHoldItem(items[0]);
+        currentSlot = 0;
 
     }
 }
