@@ -7,6 +7,8 @@ public class Building : NetworkBehaviour
 {
     public int woodCost;
     public int stoneCost;
+    public GameObject buildingObject;
+    public bool solidBuilding;
     public List<MeshRenderer> meshComponents = new List<MeshRenderer>();
     public List<Collider> colComponents = new List<Collider>();
 

@@ -6,9 +6,9 @@ using UnityEngine.Networking;
 
 public class BuildSign : NetworkBehaviour
 {
-    public TextMeshProUGUI woodUI;
-    public TextMeshProUGUI stoneUI;
-    public TextMeshProUGUI buildingName;
+    public TextMeshPro woodUI;
+    public TextMeshPro stoneUI;
+    public TextMeshPro buildingName;
     public Building building;
     public int currentStone;
     public int currentWood;
@@ -16,6 +16,7 @@ public class BuildSign : NetworkBehaviour
     public List<MeshRenderer> meshComponents = new List<MeshRenderer>();
     public List<Collider> colComponents = new List<Collider>();
     public GameObject canvas;
+    public bool canBuild;
 
     private void Update()
     {
@@ -33,6 +34,15 @@ public class BuildSign : NetworkBehaviour
             stoneUI.color = Color.white;
         
         buildingName.text = building.name;
+
+        if (building.woodCost <= currentWood && building.stoneCost <= currentStone)
+        {
+            canBuild = true;
+        }
+        else
+        {
+            canBuild = false;
+        }
     }
 
     [Client]
@@ -51,7 +61,7 @@ public class BuildSign : NetworkBehaviour
     private void RpcConstructBuilding()
     {
 
-        if (building.woodCost <= currentWood && building.stoneCost <= currentStone)
+        if (canBuild)
         {
             foreach (var item in resources)
             {
@@ -65,7 +75,10 @@ public class BuildSign : NetworkBehaviour
             {
                 item.enabled = true;
             }
-
+            if (building.solidBuilding)
+            {
+                building.buildingObject.SetActive(true);
+            }
             foreach (MeshRenderer item in meshComponents)
             {
                 item.enabled = false;
@@ -75,6 +88,8 @@ public class BuildSign : NetworkBehaviour
                 item.enabled = false;
             }
             canvas.gameObject.SetActive(false);
+
+            
 
         }
         else
@@ -113,7 +128,10 @@ public class BuildSign : NetworkBehaviour
         {
             item.enabled = false;
         }
-
+        if (building.solidBuilding)
+        {
+            building.buildingObject.SetActive(false);
+        }
         foreach (MeshRenderer item in meshComponents)
         {
             item.enabled = true;

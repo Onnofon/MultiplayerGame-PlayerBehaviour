@@ -43,30 +43,9 @@ public class PlayerActions : NetworkBehaviour
             Cursor.visible = true;
         }
 
-        //if (Input.GetMouseButtonDown(0) && player.pickupInRange && !pickedUp)
-        //{
-        //    pickedUp = true;
-        //    Debug.Log("Gimme");
-        //    if(player.pickup != null)
-        //    {
-        //        PickUp();
-        //    }
-        //}
-
-        //if (Input.GetMouseButtonDown(1) && pickedUp)
-        //{
-        //    pickedUp = false;
-        //    DropPickUp();
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.F) && tempBuilding != null)
-        //{
-        //    GetBuilding();
-        //}
-
-        if (Input.GetMouseButtonDown(0) && player.pickupInRange)
+        if (Input.GetMouseButtonDown(0) && player.pickupInRange && playerInv.itemsInInv < 4)
         {
-            playerInv.AddToIventory(player.pickup.name);
+            playerInv.AddToInventory(player.pickup.name);
             DeletePickup();
         }
         else if (Input.GetMouseButtonDown(0) && !player.pickupInRange && toolOffCd && playerInv.currentSlot == 0)
@@ -74,15 +53,7 @@ public class PlayerActions : NetworkBehaviour
             UseTool();
         }
 
-        //if (Input.GetKeyDown(KeyCode.E) && player.inRangeBuildingBoard)
-        //{
-        //    NextBuilding();
-        //}
-        //if (Input.GetKeyDown(KeyCode.Q) && player.inRangeBuildingBoard)
-        //{
-        //    player.buildBoard.Previous();
-        //}
-        if (Input.GetKeyDown(KeyCode.F) && player.inRangeBuildingSign)
+        if (Input.GetKeyDown(KeyCode.F) && player.inRangeBuildingSign && player.buildSign != null)
         {
             Build();
         }
@@ -146,22 +117,6 @@ public class PlayerActions : NetworkBehaviour
 
     }
 
-    //[Client]
-    //void NextBuilding()
-    //{
-    //    CmdNextBuilding();
-    //}
-
-    //[Command]
-    //void CmdNextBuilding()
-    //{
-    //    RpcNextBuilding();
-    //}
-    //[ClientRpc]
-    //void RpcNextBuilding()
-    //{
-    //    player.buildBoard.Next();
-    //}
     [Client]
     void UseTool()
     {
@@ -234,7 +189,12 @@ public class PlayerActions : NetworkBehaviour
     [ClientRpc]
     void RpcBuild()
     {
-        player.buildSign.ConstructBuilding();
+        if (player.buildSign.canBuild)
+        {
+            player.buildSign.ConstructBuilding();
+            player.buildSign = null;
+        }
+        
     }
 
     [Client]

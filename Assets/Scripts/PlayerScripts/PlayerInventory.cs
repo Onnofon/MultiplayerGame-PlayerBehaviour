@@ -14,31 +14,20 @@ public class PlayerInventory : NetworkBehaviour
     public GameObject rock;
     public GameObject wood;
     public GameObject mushroom;
+    public int itemsInInv;
     private void Start()
     {
         items[0] = "none";
     }
-    public void AddToIventory(string item)
+    public void AddToInventory(string item)
     {
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i] == "")
             {
                 items[i] = item;
+                itemsInInv++;
                 break;
-            }
-        }
-    }
-
-    public void RemoveFromIventory(string item)
-    {
-        int count = items.Count;
-        for (int i = 0; i < count; i++)
-        {
-            if (items[i] == item)
-            {
-                items.RemoveAt(i);
-                return;
             }
         }
     }
@@ -105,6 +94,7 @@ public class PlayerInventory : NetworkBehaviour
 
         }
         items[currentSlot] = "";
+        itemsInInv--;
         currentHoldItem.gameObject.SetActive(false);
         SetHoldItem(items[0]);
         currentSlot = 0;
