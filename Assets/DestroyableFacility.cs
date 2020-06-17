@@ -15,6 +15,12 @@ public class DestroyableFacility : NetworkBehaviour
     private bool destroyable = true;
     public BuildSign building;
 
+
+    public void Start()
+    {
+        this.transform.gameObject.tag = "Building";
+    }
+
     [ClientRpc]
     public void RpcTakeDamage(int damage)
     {

@@ -95,7 +95,7 @@ public class PlayerInventory : NetworkBehaviour
         }
         items[currentSlot] = "";
         itemsInInv--;
-        currentHoldItem.gameObject.SetActive(false);
+        currentHoldItem = null;
         SetHoldItem(items[0]);
         currentSlot = 0;
 
