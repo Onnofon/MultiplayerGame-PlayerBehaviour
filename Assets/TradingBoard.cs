@@ -20,28 +20,6 @@ public class TradingBoard : NetworkBehaviour
     {
         yourOffer.text = items[0] + "\n" + items[1] + "\n" + items[2] + "\n" + items[3] + "\n" + items[4];
         theirOffer.text = otherBoard.items[0] + "\n" + otherBoard.items[1] + "\n" + otherBoard.items[2] + "\n" + otherBoard.items[3] + "\n" + otherBoard.items[4];
-
-        if(tradeAccepted)
-        {
-            accept.color = Color.green;
-            decline.color = Color.white;
-        }
-        else
-        {
-            accept.color = Color.white;
-            decline.color = Color.red;
-        }
-
-        if(otherBoard.tradeAccepted)
-        {
-            acceptOther.color = Color.green;
-            declineOther.color = Color.white;
-        }
-        else
-        {
-            acceptOther.color = Color.white;
-            declineOther.color = Color.red;
-        }
     }
 
     [Client]
@@ -55,10 +33,14 @@ public class TradingBoard : NetworkBehaviour
         RpcUpdateBoardInfo(accept);
     }
     [ClientRpc]
-    private void RpcUpdateBoardInfo(bool accept)
+    private void RpcUpdateBoardInfo(bool acceptTrade)
     {
-        if (accept)
+        if (acceptTrade)
         {
+            accept.color = Color.green;
+            decline.color = Color.white;
+            otherBoard.acceptOther.color = Color.green;
+            otherBoard.declineOther.color = Color.white;
             tradeAccepted = true;
             if (otherBoard.tradeAccepted)
             {
@@ -69,7 +51,13 @@ public class TradingBoard : NetworkBehaviour
             }
         }
         else
+        {
+            accept.color = Color.white;
+            decline.color = Color.red;
+            otherBoard.acceptOther.color = Color.white;
+            otherBoard.declineOther.color = Color.red;
             tradeAccepted = false;
+        }
     }
 
     public Transform itemDrop;
@@ -113,13 +101,9 @@ public class TradingBoard : NetworkBehaviour
     IEnumerator SpawnItems(bool trade)
     {
         if (trade)
-        {
             spawnLoc = otherBoard.itemDrop;
-        }
         else
-        {
             spawnLoc = itemDrop;
-        }
 
         for (int i = 0; i < items.Count; i++)
         {

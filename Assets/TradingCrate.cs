@@ -20,6 +20,10 @@ public class TradingCrate : MonoBehaviour
                         tradingBoard.items[i] = other.name;
                         tradingBoard.tradeAccepted = false;
                         tradingBoard.otherBoard.tradeAccepted = false;
+                        tradingBoard.accept.color = Color.white;
+                        tradingBoard.decline.color = Color.white;
+                        tradingBoard.otherBoard.acceptOther.color = Color.white;
+                        tradingBoard.otherBoard.declineOther.color = Color.white;
                         Destroy(other.gameObject);
                         //tradingBoard.UpdateBoardInfo();
                         break;
