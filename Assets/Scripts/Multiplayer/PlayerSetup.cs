@@ -46,7 +46,7 @@ public class PlayerSetup : NetworkBehaviour {
         GameManager.RegisterPlayer(_netID, _player);
     }
 
-    void DisableComponents()
+    public void DisableComponents()
     {
         for (int i = 0; i < componentsToDisable.Length; i++)
         {

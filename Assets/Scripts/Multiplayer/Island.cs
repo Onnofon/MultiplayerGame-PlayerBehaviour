@@ -6,50 +6,61 @@ using UnityEngine.Networking;
 
 public class Island : NetworkBehaviour
 {
-    public int totalWood;
-    public int totalStone;
-    public TextMeshProUGUI woodUI;
-    public TextMeshProUGUI stoneUI;
-    public Transform buildings;
-    public BuildBoard buildingBoard;
-    // Start is called before the first frame update
+    public List<Player> players = new List<Player>();
 
-    [Client]
-    public void ConstructBuilding(string newBuilding)
-    {
-        CmdConstructBuilding(newBuilding);
-    }
-    private Building toBeConstructedBuilding;
-    [Command]
-    private void CmdConstructBuilding(string newBuilding)
-    {
-        RpcConstructBuilding(newBuilding);
-    }
+    public int completedBuildings;
+    public Island otherIsland;
 
-    [ClientRpc]
-    private void RpcConstructBuilding(string newBuilding)
+
+    private void OnTriggerEnter(Collider other)
     {
-        foreach (Transform building in buildings)
+        if(other.tag == "Player")
         {
-
-            if (building.name == newBuilding)
-            {
-                toBeConstructedBuilding = building.gameObject.GetComponent<Building>();
-                if(toBeConstructedBuilding.woodCost <= totalWood && toBeConstructedBuilding.stoneCost <= totalStone)
-                {
-                    totalWood -= toBeConstructedBuilding.woodCost;
-                    totalStone -= toBeConstructedBuilding.stoneCost;
-                    //toBeConstructedBuilding.building.SetActive(true);
-                    buildingBoard.RemoveBuilding();
-                    //toBeConstructedBuilding.building.gameObject.transform.parent = null;
-                    //Destroy(toBeConstructedBuilding.gameObject);
-                }
-                else
-                {
-                    Debug.Log("Not enough");
-                }
-
-            }
+            players.Add(other.gameObject.GetComponent<Player>());
         }
     }
+
+
+
+
+    // Start is called before the first frame update
+
+    //[Client]
+    //public void ConstructBuilding(string newBuilding)
+    //{
+    //    CmdConstructBuilding(newBuilding);
+    //}
+    //private Building toBeConstructedBuilding;
+    //[Command]
+    //private void CmdConstructBuilding(string newBuilding)
+    //{
+    //    RpcConstructBuilding(newBuilding);
+    //}
+
+    //[ClientRpc]
+    //private void RpcConstructBuilding(string newBuilding)
+    //{
+    //    foreach (Transform building in buildings)
+    //    {
+
+    //        if (building.name == newBuilding)
+    //        {
+    //            toBeConstructedBuilding = building.gameObject.GetComponent<Building>();
+    //            if(toBeConstructedBuilding.woodCost <= totalWood && toBeConstructedBuilding.stoneCost <= totalStone)
+    //            {
+    //                totalWood -= toBeConstructedBuilding.woodCost;
+    //                totalStone -= toBeConstructedBuilding.stoneCost;
+    //                //toBeConstructedBuilding.building.SetActive(true);
+    //                buildingBoard.RemoveBuilding();
+    //                //toBeConstructedBuilding.building.gameObject.transform.parent = null;
+    //                //Destroy(toBeConstructedBuilding.gameObject);
+    //            }
+    //            else
+    //            {
+    //                Debug.Log("Not enough");
+    //            }
+
+    //        }
+    //    }
+    //}
 }

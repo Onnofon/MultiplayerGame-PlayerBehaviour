@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class Player : NetworkBehaviour
 {
+    public TextMeshProUGUI playerName;
+    public PlayerSetup playerSetup;
     public Player player;
     public PlayerMovement playerMov;
     public PlayerCanvas canvas;
@@ -19,13 +22,15 @@ public class Player : NetworkBehaviour
     public CapsuleCollider triggerCol;
     public bool pendingTradeOffer;
     public PlayerAnimator playerAnim;
+    public Behaviour spectatorScript;
     //Checking players current health
     [SyncVar]
     public int currentHealth;
     public int maxHealth;
     public int currentHunger;
     public int maxHunger;
-
+    public GameObject body;
+    public GameObject head;
     //Checking if the players are dead
     [SyncVar]
     private bool _isDead = false;
@@ -71,6 +76,7 @@ public class Player : NetworkBehaviour
         GameManager.players.Remove(this.name); //removes the key + value
         GameManager.players.Add(newName, keepPlayer); //adds the remembered player with a new key
         this.name = newName; //updates the object name with the new name
+        playerName.text = this.name;
     }
 
     [SerializeField]
@@ -135,6 +141,31 @@ public class Player : NetworkBehaviour
         {
             pickup = null;
         }
+
+        if(playerName.text == "Spectator" && !isSpectator)
+        {
+            ChangeToSpectator();
+        }
+    }
+    private bool isSpectator;
+    [Client]
+    public void ChangeToSpectator()
+    {
+        CmdChangeToSpectator();
+    }
+    [Command]
+    public void CmdChangeToSpectator()
+    {
+        RpcChangeToSpectator();
+    }
+    [ClientRpc]
+    public void RpcChangeToSpectator()
+    {
+        canvas.gameObject.SetActive(false);
+        isSpectator = true;
+        spectatorScript.enabled = true;
+        head.SetActive(false);
+        body.SetActive(false);
     }
 
     [ClientRpc]

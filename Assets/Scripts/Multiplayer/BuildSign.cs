@@ -17,6 +17,7 @@ public class BuildSign : NetworkBehaviour
     public List<Collider> colComponents = new List<Collider>();
     public GameObject canvas;
     public bool canBuild;
+    public Island island;
 
     private void Update()
     {
@@ -89,7 +90,7 @@ public class BuildSign : NetworkBehaviour
             }
             canvas.gameObject.SetActive(false);
 
-            
+            island.completedBuildings++;
 
         }
         else
@@ -140,9 +141,9 @@ public class BuildSign : NetworkBehaviour
         {
             item.enabled = true;
         }
-        canvas.gameObject.SetActive(true);
-
+        canvas.gameObject.SetActive(true);       
         yield return new WaitForSeconds(0.5f);
+        island.completedBuildings--;
         currentStone = 0;
         currentWood = 0;
     }

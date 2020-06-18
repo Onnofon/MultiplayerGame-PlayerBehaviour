@@ -8,10 +8,11 @@ public class PullableRock : NetworkBehaviour
     public GameObject rockParent;
     public int playerCount;
     public List<PlayerActions> playerActions = new List<PlayerActions>();
+    public int playersNeeded;
     
     void Update()
     {
-        if (playerCount >= 1)
+        if (playerCount >= playersNeeded)
         {
             for (int i = 0; i < playerActions.Count; i++)
             {

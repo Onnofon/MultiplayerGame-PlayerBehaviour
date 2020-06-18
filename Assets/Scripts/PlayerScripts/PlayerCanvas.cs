@@ -10,7 +10,7 @@ public class PlayerCanvas : MonoBehaviour
     public Player player;
     public GameObject optionsMenu;
     public TextMeshProUGUI text;
-    public TextMeshProUGUI tradeText;
+    public TextMeshProUGUI specText;
     public Image hungerBar;
     public GameObject tradePanel;
     public List<TextMeshProUGUI> inventorySlots = new List<TextMeshProUGUI>();
@@ -37,17 +37,30 @@ public class PlayerCanvas : MonoBehaviour
                 inventorySlots[i].text = player.playerActions.playerInv.items[i];
             }
         }
+    }
 
-        if(incomingTrade)
+    public void BroadcastedMessage(string text)
+    {
+        specText.text = text;
+        StartCoroutine(SpectatorMessage(1f));
+    }
+
+    IEnumerator SpectatorMessage(float time)
+    {
+        specText.color = new Color(specText.color.r, specText.color.g, specText.color.b, 0);
+        while (specText.color.a < 1.0f)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            tradePanel.SetActive(true);
-            tradeText.text = "The other player offers: " + theirOffer + " for your: " + player.playerActions.playerInv.items[player.playerActions.playerInv.currentSlot];
+            specText.color = new Color(specText.color.r, specText.color.g, specText.color.b, specText.color.a + (Time.deltaTime / time));
+            yield return null;
         }
-        else
+
+        yield return new WaitForSeconds(2f);
+
+        specText.color = new Color(specText.color.r, specText.color.g, specText.color.b, 1);
+        while (specText.color.a > 0.0f)
         {
-            tradePanel.SetActive(false);
+            specText.color = new Color(specText.color.r, specText.color.g, specText.color.b, specText.color.a - (Time.deltaTime / time));
+            yield return null;
         }
     }
 

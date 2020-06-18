@@ -4302,7 +4302,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7918568950248615931
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4413,6 +4413,8 @@ MonoBehaviour:
   - {fileID: 3896991324061378255}
   - {fileID: 1280258944518716978}
   - {fileID: 2732493296586916135}
+  incomingTrade: 0
+  theirOffer: 
 --- !u!1 &7918568950878700791
 GameObject:
   m_ObjectHideFlags: 0
