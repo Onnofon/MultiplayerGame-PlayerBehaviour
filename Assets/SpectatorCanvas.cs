@@ -23,6 +23,7 @@ public class SpectatorCanvas : MonoBehaviour
     public void SendMessage()
     {
         spectator.BroadCastMessage(input.text);
+        messagePanel.SetActive(false);
     }
 
     public void OpenTools()

@@ -23,12 +23,13 @@ public class SpectatorControls : NetworkBehaviour
             specCanvas = Instantiate(specCanvas); //Adds canvas prefab
             specCanvas.transform.position = new Vector3(0, 0, 0);
             specCanvas.GetComponent<SpectatorCanvas>().spectator = this;
-            
+
             player.canvas.gameObject.SetActive(false);
         }
+
+        island1 = FindObjectOfType<Island>();
+        island2 = island1.otherIsland;
         RemoveFromList();
-            island1 = FindObjectOfType<Island>();
-            island2 = island1.otherIsland;
     }
 
     [Client]
@@ -90,6 +91,7 @@ public class SpectatorControls : NetworkBehaviour
     [ClientRpc]
     public void RpcRemoveFromList()
     {
+        Debug.Log("Helo");
         island1.players.Remove(player);
         island2.players.Remove(player);
     }

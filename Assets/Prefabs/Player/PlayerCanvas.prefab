@@ -1124,7 +1124,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4689,7 +4689,6 @@ MonoBehaviour:
   - {fileID: 2732493296586916135}
   incomingTrade: 0
   theirOffer: 
-  readButton: {fileID: 2773424814878451679}
 --- !u!1 &7918568950878700791
 GameObject:
   m_ObjectHideFlags: 0
