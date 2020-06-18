@@ -13,16 +13,22 @@ public class SpectatorControls : NetworkBehaviour
     public GameObject wood;
     public GameObject mushroom;
     public Transform itemDrop;
+    public Player player;
 
 
     private void Start()
     {
-        specCanvas = Instantiate(specCanvas); //Adds canvas prefab
-        specCanvas.transform.position = new Vector3(0, 0, 0);
-        specCanvas.GetComponent<SpectatorCanvas>().spectator = this;
-        island1 = FindObjectOfType<Island>();
-        island2 = island1.otherIsland;
-
+        if (isLocalPlayer)
+        {
+            specCanvas = Instantiate(specCanvas); //Adds canvas prefab
+            specCanvas.transform.position = new Vector3(0, 0, 0);
+            specCanvas.GetComponent<SpectatorCanvas>().spectator = this;
+            
+            player.canvas.gameObject.SetActive(false);
+        }
+        RemoveFromList();
+            island1 = FindObjectOfType<Island>();
+            island2 = island1.otherIsland;
     }
 
     [Client]
@@ -42,12 +48,12 @@ public class SpectatorControls : NetworkBehaviour
     {
         foreach (Player item in island1.players)
         {
-            item.canvas.BroadcastedMessage(message);
+            item.SpectatorMessage(message);
         }
 
         foreach (Player item in island2.players)
         {
-            item.canvas.BroadcastedMessage(message);
+            item.SpectatorMessage(message);
         }
     }
 
@@ -70,6 +76,22 @@ public class SpectatorControls : NetworkBehaviour
             mushroomObject.name = "Mushroom";
 
         }
+    }
+    [Client]
+    public void RemoveFromList()
+    {
+        CmdRemoveFromList();
+    }
+    [Command]
+    public void CmdRemoveFromList()
+    {
+        RpcRemoveFromList();
+    }
+    [ClientRpc]
+    public void RpcRemoveFromList()
+    {
+        island1.players.Remove(player);
+        island2.players.Remove(player);
     }
 
 }

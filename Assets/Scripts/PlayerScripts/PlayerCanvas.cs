@@ -37,6 +37,8 @@ public class PlayerCanvas : MonoBehaviour
                 inventorySlots[i].text = player.playerActions.playerInv.items[i];
             }
         }
+
+
     }
 
     public void BroadcastedMessage(string text)
@@ -54,7 +56,7 @@ public class PlayerCanvas : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(7f);
 
         specText.color = new Color(specText.color.r, specText.color.g, specText.color.b, 1);
         while (specText.color.a > 0.0f)

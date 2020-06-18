@@ -166,7 +166,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2307746532980386890}
-  m_Father: {fileID: 1658668248140509741}
+  m_Father: {fileID: 7242283488889472467}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -767,7 +767,6 @@ Transform:
   - {fileID: 7399352846010982512}
   - {fileID: 1664831792121109587}
   - {fileID: 7242283488889472467}
-  - {fileID: 1217019546861285396}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -898,6 +897,7 @@ MonoBehaviour:
   head: {fileID: 5027929144991849861}
   disableOnDeath:
   - {fileID: 6557570725391090231}
+  specControls: {fileID: 9089535954254013264}
   img: {fileID: 0}
   pickupInRange: 0
   inRangeBuildingSign: 0
@@ -1077,11 +1077,13 @@ MonoBehaviour:
   specCanvas: {fileID: 5495415767374424688, guid: c37b17be6b341c34e8805b2c5de39950,
     type: 3}
   island1: {fileID: 0}
+  island2: {fileID: 0}
   rock: {fileID: 4778808799107193722, guid: 9360b7bb5fe77c74ba339c474d63f6a2, type: 3}
   wood: {fileID: 4930266834957831790, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
   mushroom: {fileID: 1035751225372336371, guid: bfac4be1afcab6648b2c530f6e7116dd,
     type: 3}
   itemDrop: {fileID: 6049066609332797259}
+  player: {fileID: 7421229250505722632}
 --- !u!1 &1662115690388835261
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,7 +2371,7 @@ Transform:
   - {fileID: 2342435925292668767}
   - {fileID: 6099490513513170903}
   - {fileID: 8620929524691261828}
-  - {fileID: 3507639612501083833}
+  - {fileID: 3507639612501083776}
   - {fileID: 6076101677339105904}
   m_Father: {fileID: 1658881179233279061}
   m_RootOrder: 4
@@ -2523,6 +2525,7 @@ Transform:
   - {fileID: 5881299547317280501}
   - {fileID: 9094192927079842426}
   - {fileID: 6938130454801553275}
+  - {fileID: 1217019546861285396}
   m_Father: {fileID: 1658668248140509741}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2648,7 +2651,6 @@ MonoBehaviour:
   smoothing: 2
   camera: {fileID: 2165617265623094801}
   camMouse: {fileID: 7168613158988025743}
-  specControls: {fileID: 3379315750891501026}
 --- !u!1 &5887328396348094850
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,7 +3329,7 @@ PrefabInstance:
     - {fileID: -2980129025021885931, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
     - {fileID: 7743496861117866614, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
---- !u!4 &3507639612501083833 stripped
+--- !u!4 &3507639612501083776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4930266834957668942, guid: 48525ea3edaea564f8f8de0ef674056e,
     type: 3}

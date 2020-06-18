@@ -148,6 +148,7 @@ public class Player : NetworkBehaviour
         }
     }
     private bool isSpectator;
+    public Behaviour specControls;
     [Client]
     public void ChangeToSpectator()
     {
@@ -161,9 +162,10 @@ public class Player : NetworkBehaviour
     [ClientRpc]
     public void RpcChangeToSpectator()
     {
-        canvas.gameObject.SetActive(false);
+        //canvas.gameObject.SetActive(false);
         isSpectator = true;
         spectatorScript.enabled = true;
+        specControls.enabled = true;
         head.SetActive(false);
         body.SetActive(false);
     }
@@ -314,13 +316,6 @@ public class Player : NetworkBehaviour
         {
             inRangeBuildingSign = false;
         }
-        
-        if (col.other.tag == "Player")
-        {
-            inRangePlayer = false;
-            otherPlayer = null;
-            canvas.text.gameObject.SetActive(false);
-        }
     }
 
     private string tempSlot;
@@ -354,23 +349,21 @@ public class Player : NetworkBehaviour
     }
 
     [Client]
-    public void TradeRequest(string theirOffer)
+    public void SpectatorMessage(string text)
     {
-        CmdTradeRequest(theirOffer);
+        CmdSpectatorMessage(text);
     }
 
     [Command]
-    public void CmdTradeRequest(string theirOffer)
+    public void CmdSpectatorMessage(string text)
     {
-        RpcTradeRequest(theirOffer);
+        RpcSpectatorMessage(text);
     }
 
     [ClientRpc]
-    public void RpcTradeRequest(string theirOffer)
+    public void RpcSpectatorMessage(string text)
     {
-        canvas.theirOffer = theirOffer;
-        canvas.incomingTrade = true;
-        pendingTradeOffer = true;
+        canvas.BroadcastedMessage(text);
     }
 
     //[Client]

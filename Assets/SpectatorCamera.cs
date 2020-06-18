@@ -41,21 +41,19 @@ public class SpectatorCamera : MonoBehaviour
     GameObject character;
     public Camera camera;
     public Behaviour camMouse;
-    public Behaviour specControls;
 
     private void Start()
     {
         character = this.gameObject;
         camMouse.enabled = false;
         looking = true;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        specControls.enabled = true;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
     void Update()
     {
 
-        
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
         var fastMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         var movementSpeed = fastMode ? this.fastMovementSpeed : this.movementSpeed;
