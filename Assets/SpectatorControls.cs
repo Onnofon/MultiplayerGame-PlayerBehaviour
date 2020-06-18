@@ -14,6 +14,7 @@ public class SpectatorControls : NetworkBehaviour
     public GameObject mushroom;
     public Transform itemDrop;
     public Player player;
+    public Behaviour[] scripts;
 
 
     private void Start()
@@ -25,11 +26,15 @@ public class SpectatorControls : NetworkBehaviour
             specCanvas.GetComponent<SpectatorCanvas>().spectator = this;
 
             player.canvas.gameObject.SetActive(false);
+            foreach (Behaviour item in scripts)
+            {
+                item.enabled = false;
+            }
         }
 
         island1 = FindObjectOfType<Island>();
         island2 = island1.otherIsland;
-        RemoveFromList();
+        //RemoveFromList();
     }
 
     [Client]
@@ -58,7 +63,20 @@ public class SpectatorControls : NetworkBehaviour
         }
     }
 
+    [Client]
     public void SpawnResource(string resource)
+    {
+        CmdSpawnResource(resource);
+    }
+
+    [Command]
+    public void CmdSpawnResource(string resource)
+    {
+        RpcSpawnResource(resource);
+    }
+
+    [ClientRpc]
+    public void RpcSpawnResource(string resource)
     {
         if (resource == "Rock")
         {

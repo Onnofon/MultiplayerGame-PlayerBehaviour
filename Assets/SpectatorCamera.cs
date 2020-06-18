@@ -39,22 +39,19 @@ public class SpectatorCamera : MonoBehaviour
     public float sensitivity = 1.0f;
     public float smoothing = 2.0f;
     GameObject character;
-    public Camera camera;
     public Behaviour camMouse;
 
     private void Start()
     {
         character = this.gameObject;
         camMouse.enabled = false;
-        looking = true;
-        //Cursor.lockState = CursorLockMode.Locked;
+        //camMouse.enabled = false;
+        //looking = true;
+        //Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.None;
     }
     void Update()
     {
-
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
         var fastMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         var movementSpeed = fastMode ? this.fastMovementSpeed : this.movementSpeed;
 
@@ -105,21 +102,26 @@ public class SpectatorCamera : MonoBehaviour
             transform.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
         }
 
-        float axis = Input.GetAxis("Mouse ScrollWheel");
-        if (axis != 0)
-        {
-            var zoomSensitivity = fastMode ? this.fastZoomSensitivity : this.zoomSensitivity;
-            transform.position = transform.position + transform.forward * axis * zoomSensitivity;
-        }
+        //float axis = Input.GetAxis("Mouse ScrollWheel");
+        //if (axis != 0)
+        //{
+        //    var zoomSensitivity = fastMode ? this.fastZoomSensitivity : this.zoomSensitivity;
+        //    transform.position = transform.position + transform.forward * axis * zoomSensitivity;
+        //}
 
-        //if (Input.GetKeyDown(KeyCode.Mouse1))
-        //{
-        //    StartLooking();
-        //}
-        //else if (Input.GetKeyUp(KeyCode.Mouse1))
-        //{
-        //    StopLooking();
-        //}
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            looking = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            looking = true;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        
     }
 
     void OnDisable()

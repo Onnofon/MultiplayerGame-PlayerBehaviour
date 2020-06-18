@@ -12,6 +12,7 @@ public class Player : NetworkBehaviour
     public Player player;
     public PlayerMovement playerMov;
     public PlayerCanvas canvas;
+    public PlayerForm playerForm;
     public int thresholdLow;
     public int thresholdTop;
     public Transform emotions;
@@ -338,15 +339,6 @@ public class Player : NetworkBehaviour
         pendingTradeOffer = false;
     }
 
-    public void DisplayCost(int[] costs)
-    {
-        canvas.DisplayCost(costs[0].ToString(),costs[1].ToString());
-    }
-
-    public void RemoveText()
-    {
-        canvas.text.gameObject.SetActive(false);
-    }
 
     [Client]
     public void SpectatorMessage(string text)
@@ -364,6 +356,35 @@ public class Player : NetworkBehaviour
     public void RpcSpectatorMessage(string text)
     {
         canvas.BroadcastedMessage(text);
+    }
+
+    [Client]
+    public void SetForm(string text)
+    {
+        CmdSetForm(text);
+    }
+
+    [Command]
+    public void CmdSetForm(string text)
+    {
+        RpcSetForm(text);
+    }
+
+    [ClientRpc]
+    public void RpcSetForm(string text)
+    {
+        if (text == "Woodcutter")
+        {
+            playerForm.Woodcutter();
+        }
+        else if (text == "Gatherer")
+        {
+            playerForm.Gatherer();
+        }
+        else if (text == "Miner")
+        {
+            playerForm.Miner();
+        }
     }
 
     //[Client]

@@ -878,6 +878,7 @@ MonoBehaviour:
   player: {fileID: 7421229250505722632}
   playerMov: {fileID: 6557570725391090231}
   canvas: {fileID: 6003705127974954510, guid: 6cce2bc8e0001114c8d74a5c47588ce1, type: 3}
+  playerForm: {fileID: 7064521658039321738}
   thresholdLow: 0
   thresholdTop: 0
   emotions: {fileID: 7242283488889472467}
@@ -1084,6 +1085,13 @@ MonoBehaviour:
     type: 3}
   itemDrop: {fileID: 6049066609332797259}
   player: {fileID: 7421229250505722632}
+  scripts:
+  - {fileID: 7421229250505722632}
+  - {fileID: 6557570725391090231}
+  - {fileID: -3308635428589690969}
+  - {fileID: 7064521658039321738}
+  - {fileID: 4195414908823629949}
+  - {fileID: 7294262933857362389}
 --- !u!1 &1662115690388835261
 GameObject:
   m_ObjectHideFlags: 0
@@ -2371,7 +2379,7 @@ Transform:
   - {fileID: 2342435925292668767}
   - {fileID: 6099490513513170903}
   - {fileID: 8620929524691261828}
-  - {fileID: 3507639612501083776}
+  - {fileID: 3507639612501083796}
   - {fileID: 6076101677339105904}
   m_Father: {fileID: 1658881179233279061}
   m_RootOrder: 4
@@ -2649,7 +2657,6 @@ MonoBehaviour:
   fastZoomSensitivity: 50
   sensitivity: 1
   smoothing: 2
-  camera: {fileID: 2165617265623094801}
   camMouse: {fileID: 7168613158988025743}
 --- !u!1 &5887328396348094850
 GameObject:
@@ -3329,7 +3336,7 @@ PrefabInstance:
     - {fileID: -2980129025021885931, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
     - {fileID: 7743496861117866614, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 48525ea3edaea564f8f8de0ef674056e, type: 3}
---- !u!4 &3507639612501083776 stripped
+--- !u!4 &3507639612501083796 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4930266834957668942, guid: 48525ea3edaea564f8f8de0ef674056e,
     type: 3}

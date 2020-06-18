@@ -10,13 +10,18 @@ public class Island : NetworkBehaviour
 
     public int completedBuildings;
     public Island otherIsland;
+    public int currentPlayers;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            players.Add(other.gameObject.GetComponent<Player>());
+            if (other.name != "Spectator")
+            {
+                players[currentPlayers] = other.gameObject.GetComponent<Player>();
+                currentPlayers++;
+            }
         }
     }
 

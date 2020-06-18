@@ -894,6 +894,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 134722780389685163, guid: feb989b2bc976c74e97a5c1ec478a3b1,
         type: 3}
+      propertyPath: players.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 134722780389685163, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+        type: 3}
       propertyPath: otherIsland
       value: 
       objectReference: {fileID: 6903629964554485155}
@@ -7546,6 +7551,11 @@ PrefabInstance:
     - target: {fileID: 1994850019, guid: feb989b2bc976c74e97a5c1ec478a3b1, type: 3}
       propertyPath: m_AssetId.i15
       value: 177
+      objectReference: {fileID: 0}
+    - target: {fileID: 134722780389685163, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+        type: 3}
+      propertyPath: players.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 134722780389685163, guid: feb989b2bc976c74e97a5c1ec478a3b1,
         type: 3}
