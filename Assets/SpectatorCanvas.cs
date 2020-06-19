@@ -13,26 +13,65 @@ public class SpectatorCanvas : MonoBehaviour
     public TMP_InputField input;
     public Player player;
     public TextMeshProUGUI selectedPlayer;
+    public GameObject islandInfo;
 
     public void MessagePanel(bool open)
     {
         if (open)
         {
             messagePanel.SetActive(true);
+            islandInfo.SetActive(true);
             toolsPanel.SetActive(false);
         }
         else
         {
             messagePanel.SetActive(false);
+            islandInfo.SetActive(false);
         }
     }
     void Update()
     {
+        if (spectator.island1.islandActive && spectator.island2.islandActive)
+        {
+            for (int i = 0; i < spectator.island1.players.Count; i++)
+            {
+                if (spectator.island1.players[i] != null)
+                {
+                    island1Players[i].text = spectator.island1.players[i].name;
+                }
+            }
+            for (int i = 0; i < spectator.island2.players.Count; i++)
+            {
+                if (spectator.island2.players[i] != null)
+                {
+                    island2Players[i].text = spectator.island2.players[i].name;
+                }
+            }          
+        }
     }
-        public void SendMessage()
+    public void SendMessageAll()
     {
-        spectator.BroadCastMessage(input.text);
+        spectator.BroadCastMessageAll(input.text);
         messagePanel.SetActive(false);
+        islandInfo.SetActive(false);
+    }
+    
+
+    public void SendMessageTeam(bool team1)
+    {
+        spectator.BroadCastMessageTeam(input.text, team1);
+        messagePanel.SetActive(false);
+        islandInfo.SetActive(false);
+    }
+
+    public void SendMessageSingle()
+    {
+        if (player != null)
+        {
+            spectator.BroadCastMessageIndividual(input.text, player.name);
+            islandInfo.SetActive(false);
+            messagePanel.SetActive(false);
+        }
     }
 
     public void ToolsPanel(bool open)
@@ -68,14 +107,16 @@ public class SpectatorCanvas : MonoBehaviour
     public void RolesPanel(bool open)
     {
         if (open)
-        {         
+        {
+            islandInfo.SetActive(true);
             rolesPanel.SetActive(true);
             toolsPanel.SetActive(false);
-            AddPlayers();
+            //AddPlayers();
         }
         else
         {
             rolesPanel.SetActive(false);
+            islandInfo.SetActive(false);
         }
     }
 
@@ -83,26 +124,14 @@ public class SpectatorCanvas : MonoBehaviour
     {
         if (player != null)
         {
-            player.SetForm(role);
+            spectator.ChangeRole(role, player.name);
+            rolesPanel.SetActive(false);
+            islandInfo.SetActive(false);
         }
     }
 
-    public TextMeshProUGUI player1;
-    public TextMeshProUGUI player2;
-    public TextMeshProUGUI player3;
-    public TextMeshProUGUI player4;
-    public TextMeshProUGUI player5;
-    public TextMeshProUGUI player6;
-
-    public void AddPlayers()
-    {
-        player1.text = spectator.island1.players[0].name;
-        player2.text = spectator.island1.players[1].name;
-        player3.text = spectator.island1.players[2].name;
-        player4.text = spectator.island2.players[0].name;
-        player5.text = spectator.island2.players[1].name;
-        player6.text = spectator.island2.players[2].name;
-    }
+    public List<TextMeshProUGUI> island1Players;
+    public List<TextMeshProUGUI> island2Players;
 
     public void PickPlayer(int playerName)
     {
@@ -115,10 +144,6 @@ public class SpectatorCanvas : MonoBehaviour
         {
             player = spectator.island2.players[playerName-3];
             selectedPlayer.text = player.name;
-        }
-
-            
-        
-        
+        } 
     }
 }

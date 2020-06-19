@@ -902,6 +902,11 @@ PrefabInstance:
       propertyPath: otherIsland
       value: 
       objectReference: {fileID: 6903629964554485155}
+    - target: {fileID: 134722780389685163, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+        type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 1920050524}
     - target: {fileID: 147280044305529538, guid: feb989b2bc976c74e97a5c1ec478a3b1,
         type: 3}
       propertyPath: m_AssetId.i0
@@ -2651,6 +2656,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2994717347185679938, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4941091881675486253, guid: feb989b2bc976c74e97a5c1ec478a3b1,
         type: 3}
@@ -6713,6 +6723,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc692f96a632c36429a1f1ba8cdd809b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1920050524 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2994717347185679938, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1920050521}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6903629964554485153
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7562,6 +7578,11 @@ PrefabInstance:
       propertyPath: otherIsland
       value: 
       objectReference: {fileID: 1920050523}
+    - target: {fileID: 134722780389685163, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+        type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 6903629964554485156}
     - target: {fileID: 147280044305529538, guid: feb989b2bc976c74e97a5c1ec478a3b1,
         type: 3}
       propertyPath: m_AssetId.i0
@@ -9471,6 +9492,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2994717347185679938, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6778082231042779259, guid: feb989b2bc976c74e97a5c1ec478a3b1,
         type: 3}
@@ -13818,3 +13844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc692f96a632c36429a1f1ba8cdd809b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &6903629964554485156 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2994717347185679938, guid: feb989b2bc976c74e97a5c1ec478a3b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6903629964554485153}
+  m_PrefabAsset: {fileID: 0}

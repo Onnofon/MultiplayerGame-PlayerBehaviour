@@ -11,8 +11,13 @@ public class Island : NetworkBehaviour
     public int completedBuildings;
     public Island otherIsland;
     public int currentPlayers;
+    public BoxCollider col;
+    public bool islandActive;
 
-
+    private void Start()
+    {
+        StartCoroutine(PlayerListCd());
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -25,6 +30,12 @@ public class Island : NetworkBehaviour
         }
     }
 
+    IEnumerator PlayerListCd()
+    {
+        yield return new WaitForSeconds(3f);
+        col.enabled = true;
+        islandActive = true;
+    }
 
 
 

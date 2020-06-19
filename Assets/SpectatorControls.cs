@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -15,6 +16,8 @@ public class SpectatorControls : NetworkBehaviour
     public Transform itemDrop;
     public Player player;
     public Behaviour[] scripts;
+    public Player selectedPlayer;
+    public List<Player> allPlayers = new List<Player>();
 
 
     private void Start()
@@ -34,32 +37,115 @@ public class SpectatorControls : NetworkBehaviour
 
         island1 = FindObjectOfType<Island>();
         island2 = island1.otherIsland;
-        //RemoveFromList();
+        StartCoroutine(PlayerListCd());
     }
 
     [Client]
-    public void BroadCastMessage(string message)
+    public void BroadCastMessageAll(string message)
     {
-        CmdBroadCastMessage(message);
+        CmdBroadCastMessageAll(message);
     }
 
     [Command]
-    public void CmdBroadCastMessage(string message)
+    public void CmdBroadCastMessageAll(string message)
     {
-        RpcBroadCastMessage(message);
+        RpcBroadCastMessageAll(message);
     }
 
     [ClientRpc]
-    public void RpcBroadCastMessage(string message)
+    public void RpcBroadCastMessageAll(string message)
     {
-        foreach (Player item in island1.players)
+        foreach (Player item in allPlayers)
         {
-            item.SpectatorMessage(message);
+            if (item != null)
+            {
+                item.SpectatorMessage(message);
+            }
         }
+    }
 
-        foreach (Player item in island2.players)
+    [Client]
+    public void BroadCastMessageTeam(string message, bool team1)
+    {
+        CmdBroadCastMessageTeam(message, team1);
+    }
+
+    [Command]
+    public void CmdBroadCastMessageTeam(string message, bool team1)
+    {
+        RpcBroadCastMessageTeam(message, team1);
+    }
+
+    [ClientRpc]
+    public void RpcBroadCastMessageTeam(string message, bool team1)
+    {
+        if (team1)
         {
-            item.SpectatorMessage(message);
+            foreach (Player item in island1.players)
+            {
+                if (item != null)
+                {
+                    item.SpectatorMessage(message);
+                }
+            }
+        }
+        else
+        {
+            foreach (Player item in island2.players)
+            {
+                if (item != null)
+                {
+                    item.SpectatorMessage(message);
+                }
+            }
+        }
+    }
+
+    [Client]
+    public void BroadCastMessageIndividual(string message, string name)
+    {
+        CmdBroadCastMessageIndividual(message, name);
+    }
+
+    [Command]
+    public void CmdBroadCastMessageIndividual(string message, string name)
+    {
+        RpcBroadCastMessageIndividual(message, name);
+    }
+
+    [ClientRpc]
+    public void RpcBroadCastMessageIndividual(string message, string name)
+    {
+        foreach (Player item in allPlayers)
+        {
+            if (item.name == name)
+            {
+                item.SpectatorMessage(message);
+            }
+        }
+    }
+
+    [Client]
+    public void ChangeRole(string role, string name)
+    {
+        CmdChangeRole(role, name);
+    }
+
+    [Command]
+    public void CmdChangeRole(string role, string name)
+    {
+        RpcChangeRole(role, name);
+    }
+
+    [ClientRpc]
+    public void RpcChangeRole(string role, string name)
+    {
+        foreach (Player item in allPlayers)
+        {
+            if(item.name == name)
+            {
+                item.SetForm(role);
+            }
         }
     }
 
@@ -80,7 +166,6 @@ public class SpectatorControls : NetworkBehaviour
     {
         if (resource == "Rock")
         {
-            Debug.Log("Rock drop");
             var rockObject = (GameObject)Instantiate(rock, itemDrop.position, itemDrop.rotation);
             rockObject.name = "Rock";
         }
@@ -96,22 +181,44 @@ public class SpectatorControls : NetworkBehaviour
 
         }
     }
-    [Client]
-    public void RemoveFromList()
+
+    IEnumerator PlayerListCd()
     {
-        CmdRemoveFromList();
+        yield return new WaitForSeconds(5f);
+
+        foreach (var item in island1.players)
+        {
+            allPlayers.Add(item);
+        }
+
+        foreach (var item in island2.players)
+        {
+            allPlayers.Add(item);
+        }
     }
-    [Command]
-    public void CmdRemoveFromList()
-    {
-        RpcRemoveFromList();
-    }
-    [ClientRpc]
-    public void RpcRemoveFromList()
-    {
-        Debug.Log("Helo");
-        island1.players.Remove(player);
-        island2.players.Remove(player);
-    }
+
+    //[Client]
+    //public void ListAllPlayers()
+    //{
+    //    CmdListAllPlayers();
+    //}
+    //[Command]
+    //public void CmdListAllPlayers()
+    //{
+    //    RpcListAllPlayers();
+    //}
+    //[ClientRpc]
+    //public void RpcListAllPlayers()
+    //{
+    //    foreach (var item in island1.players)
+    //    {
+    //        allPlayers.Add(item);
+    //    }
+
+    //    foreach (var item in island2.players)
+    //    {
+    //        allPlayers.Add(item);
+    //    }
+    //}
 
 }

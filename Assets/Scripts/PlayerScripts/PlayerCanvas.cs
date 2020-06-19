@@ -9,6 +9,7 @@ public class PlayerCanvas : MonoBehaviour
     // Start is called before the first frame update
     public Player player;
     public GameObject optionsMenu;
+    public GameObject startMenu;
     public TextMeshProUGUI text;
     public TextMeshProUGUI specText;
     public Image hungerBar;
@@ -16,6 +17,7 @@ public class PlayerCanvas : MonoBehaviour
     public List<TextMeshProUGUI> inventorySlots = new List<TextMeshProUGUI>();
     public bool incomingTrade;
     public string theirOffer;
+    public bool chosenRole;
     void Start()
     {
         
@@ -37,8 +39,6 @@ public class PlayerCanvas : MonoBehaviour
                 inventorySlots[i].text = player.playerActions.playerInv.items[i];
             }
         }
-
-
     }
 
     public void BroadcastedMessage(string text)
@@ -69,6 +69,16 @@ public class PlayerCanvas : MonoBehaviour
     public void CurrentEmotion(string emotion)
     {
         player.SetEmotion(emotion);
+    }
+
+    public void ChangeRole(string role)
+    {
+        if (player != null)
+        {
+            player.SetForm(role);
+            startMenu.SetActive(false);
+            chosenRole = true;
+        }
     }
 
     public void CurrentEmote(string emote)

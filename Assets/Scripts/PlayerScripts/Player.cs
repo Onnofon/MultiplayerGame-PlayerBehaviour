@@ -383,6 +383,7 @@ public class Player : NetworkBehaviour
         }
         else if (text == "Miner")
         {
+            Debug.Log("Change");
             playerForm.Miner();
         }
     }
