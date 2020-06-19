@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f983a21d6d388145b96a26b79964e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 400
   itemDrops:
   - {fileID: 4778808799107193722, guid: 9360b7bb5fe77c74ba339c474d63f6a2, type: 3}
   - {fileID: 4778808799107193722, guid: 9360b7bb5fe77c74ba339c474d63f6a2, type: 3}
